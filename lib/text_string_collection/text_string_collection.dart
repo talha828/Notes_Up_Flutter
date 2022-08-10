@@ -9,5 +9,10 @@ class TextCollection{
   static  final String text_Chat_with_Friend_subtitle="You can also chat with your friends and teachers and keep updated. Share your experience and struggles here ";
   static  final String text_welcome_to_note_up="Welcome To Notes Up";
   static  final String text_welcome_to_note_up_subtitle="Share your Notes. Get others Notes Chat with friends keep keep learning keep fun and enjoy your monuments ";
+  static  final String text_Sign_up="Sign Up";
+  static  final String text_field_name="Name";
+  static  final String text_field_email="Email";
+  static  final String text_field_password="Password";
+  static  final String text_field_confirm_password="Confirm Password";
 
 }
