@@ -32,6 +32,10 @@ dependencies:
   google_fonts: 2.0.0
   page_indicator: 0.3.0
   page_transition: 2.0.9
+  firebase_core: ^1.6.0
+  firebase_auth: 2.0.0
+  firebase_database: ^8.1.0
+
 
 
 dev_dependencies:
