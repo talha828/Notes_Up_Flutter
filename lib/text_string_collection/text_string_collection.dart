@@ -14,5 +14,10 @@ class TextCollection{
   static  final String text_field_email="Email";
   static  final String text_field_password="Password";
   static  final String text_field_confirm_password="Confirm Password";
+  static  final String text_fill_your_details_below="Fill Your Details Below";
+  static  final String text_country="Country";
+  static  final String text_city="City";
+  static  final String text_institute="Institute";
+  static  final String text_grade="Grade";
 
 }
