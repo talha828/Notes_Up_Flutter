@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_notes/Screens/get_start_screen/share_your_collection_screen/share_your_collection_screen.dart';
+import 'package:quick_notes/Screens/main_screen/main_screen.dart';
 import 'package:quick_notes/Screens/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quick_notes/constant/constant.dart';
 import 'package:quick_notes/model/user_model.dart';
+
+import 'Screens/login_screen/login_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,11 +26,12 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         theme: ThemeData(
+          primaryColor: themeColor1,
           textTheme: GoogleFonts.montserratTextTheme(
             Theme.of(context).textTheme,
           )
         ),
-        home: SplashScreen(),
+        home: LoginScreen(),
       ),
     );
   }

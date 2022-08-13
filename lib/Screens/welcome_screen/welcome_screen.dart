@@ -27,7 +27,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               Image.asset(A.assets_book,scale: 2,),
               Text(TextCollection.text_welcome_to_note_up,style: TextStyle(fontSize:  width * 0.077,fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
               Text(TextCollection.text_welcome_to_note_up_subtitle,style: TextStyle(fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
-              MainButton(text: "SignUp",onTap: ()=> Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 1500), child: SignUpScreen())),),
+              MainButton(text: "SignUp",onTap: ()=> Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 1000), child: SignUpScreen())),),
               MainButton(text: "LogIn",),
               SizedBox(height: 1,)
             ],

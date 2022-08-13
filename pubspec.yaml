@@ -37,6 +37,7 @@ dependencies:
   firebase_database: ^8.1.0
   fluttertoast: 7.1.8
   provider: 4.3.3
+  fancy_bottom_navigation: ^0.3.3
 
 
 dev_dependencies:

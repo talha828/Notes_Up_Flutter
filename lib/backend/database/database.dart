@@ -5,17 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Database {
-  storeUserSignUpData(String name,String email,String password,String country,String city,String institute,String grade,var then) {
-    if(country != null){
-      if(city != null){
-        if(institute != null){
-          if(grade != null){
+  storeUserSignUpData(String name,String email,String password,String country,String city,String institute,String grade,var then,Function setLoading) {
+    if(country != ""){
+      if(city != ""){
+        if(institute != ""){
+          if(grade != ""){
+            setLoading(true);
             FirebaseAuth _auth = FirebaseAuth.instance;
             FirebaseDatabase.instance
                 .reference()
-                .child("userinfo").child("userdetails")
+                .child("userinfo").child(_auth.currentUser.uid)
                 .set({
-              _auth.currentUser.uid:{
+              "details":{
                 "name":name,
                 "email":email,
                 "password":password,
@@ -26,6 +27,7 @@ class Database {
                 "uid":_auth.currentUser.uid,
               }
             }).then(then).catchError((e){
+              setLoading(false);
               Fluttertoast.showToast(
                   msg: "Somethings went wrong",
                   toastLength: Toast.LENGTH_SHORT,

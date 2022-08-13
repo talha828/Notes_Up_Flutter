@@ -19,5 +19,9 @@ class TextCollection{
   static  final String text_city="City";
   static  final String text_institute="Institute";
   static  final String text_grade="Grade";
+  static  final String text_no_message="No Messages, Yet";
+  static  final String text_no_message_subtitle_1="No messages in your inbox, Yet! Start";
+  static  final String text_no_message_subtitle_2="chatting with people around you";
+  static  final String text_login="Login";
 
 }
