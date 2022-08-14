@@ -13,6 +13,7 @@ import 'package:quick_notes/custome_widget/main_button.dart';
 import 'package:quick_notes/globle_variable.dart';
 import 'package:quick_notes/model/user_model.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../image_collection/A.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -61,14 +62,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     QuickTextField(
                       title: TextCollection.text_field_email,
-                      icon: Icons.person,
+                      icon: Icons.email,
                       hintText: TextCollection.text_field_email,
                       onChange: (value) {},
                       controller: email,
                     ),
                     QuickTextField(
                       title: TextCollection.text_field_password,
-                      icon: Icons.person,
+                      icon: Icons.password,
                       hintText: TextCollection.text_field_password,
                       onChange: (value) {},
                       controller: password,
@@ -76,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     QuickTextField(
                       title: TextCollection.text_field_confirm_password,
-                      icon: Icons.person,
+                      icon: Icons.password,
                       hintText: TextCollection.text_field_confirm_password,
                       onChange: (value) {},
                       controller: confirmPassword,
@@ -88,8 +89,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     MainButton(
                       text: TextCollection.text_next,
                       onTap: () {
-                        Auth().firebaseSignUpWithEmail(name.text,
-                          email.text, password.text, confirmPassword.text, (value) {
+                        Auth.firebaseSignUpWithEmail(name.text,
+                          email.text, password.text, confirmPassword.text, (value)async {
+                          SharedPreferences pref= await SharedPreferences.getInstance();
+                          pref.setString("email", email.text);
+                          pref.setString("password", password.text);
                             Provider.of<UserModel>(context, listen: false).storeDetails(
                                 name.text,
                                 email.text,

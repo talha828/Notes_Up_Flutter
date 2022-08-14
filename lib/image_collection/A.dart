@@ -8,4 +8,6 @@ static  final String assets_book="assets/image/book.png";
 static  final String assets_sign_up="assets/image/sign.svg";
 static  final String assets_empty_chat="assets/image/chat.svg";
 static  final String assets_login="assets/image/login.svg";
+static  final String assets_upload="assets/image/upload.svg";
+static  final String assets_save_collection="assets/image/save_collection.svg";
 }

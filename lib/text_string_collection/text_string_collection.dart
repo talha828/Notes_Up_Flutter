@@ -23,5 +23,13 @@ class TextCollection{
   static  final String text_no_message_subtitle_1="No messages in your inbox, Yet! Start";
   static  final String text_no_message_subtitle_2="chatting with people around you";
   static  final String text_login="Login";
+  static  final String text_Remember_Me="Remember Me";
+  static  final String text_Forget_Password="Forget Password?";
+  static  final String text_no_upload="No File, Yet";
+  static  final String text_no_collection="No Collection, Yet";
+  static  final String text_no_upload_subtitle_1="No File in your upload Folder, Yet! Start";
+  static  final String text_no_upload_subtitle_2="uploading and Share with people around you";
+  static  final String text_no_collection_subtitle_1="No Collection in your Folder, Yet! Start";
+  static  final String text_no_collection_subtitle_2="Make Collection and Share with people around you";
 
 }
