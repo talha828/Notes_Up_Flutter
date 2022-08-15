@@ -25,11 +25,21 @@ class TextCollection{
   static  final String text_login="Login";
   static  final String text_Remember_Me="Remember Me";
   static  final String text_Forget_Password="Forget Password?";
-  static  final String text_no_upload="No File, Yet";
+  static  final String text_no_upload_from_gallery="Upload From Gallery";
+  static  final String text_no_upload_from_gallery_subtitle_1="(only Pdf are allowed)";
   static  final String text_no_collection="No Collection, Yet";
   static  final String text_no_upload_subtitle_1="No File in your upload Folder, Yet! Start";
   static  final String text_no_upload_subtitle_2="uploading and Share with people around you";
   static  final String text_no_collection_subtitle_1="No Collection in your Folder, Yet! Start";
   static  final String text_no_collection_subtitle_2="Make Collection and Share with people around you";
+  static  final String text_click_images="Click Images By Camera";
+  static  final String text_upload_your_notes="Upload Your notes";
+  static  final String text_Author_name="Author Name";
+  static  final String text_Grade="Grade";
+  static  final String text_Edition="Edition";
+  static  final String text_Upload="Upload";
+  static  final String text_Upload_from_camera="Upload From Camera";
+  static  final String text_no_upload_from_camera_subtitle_1="(only png and jpg are allowed)";
+
 
 }

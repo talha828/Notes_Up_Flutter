@@ -5,6 +5,8 @@ import 'package:quick_notes/Screens/get_start_screen/share_your_collection_scree
 import 'package:quick_notes/Screens/main_screen/main_screen.dart';
 import 'package:quick_notes/Screens/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quick_notes/Screens/upload_screen/upload_from_gallery/upload_from_gallery.dart';
+import 'package:quick_notes/Screens/upload_screen/upload_screen.dart';
 import 'package:quick_notes/constant/constant.dart';
 import 'package:quick_notes/model/user_model.dart';
 
@@ -27,11 +29,14 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: ThemeData(
           primaryColor: themeColor1,
+          primaryTextTheme:GoogleFonts.montserratTextTheme(
+            Theme.of(context).textTheme,
+          ) ,
           textTheme: GoogleFonts.montserratTextTheme(
             Theme.of(context).textTheme,
           )
         ),
-        home: SplashScreen(),
+        home: MainScreen(),
       ),
     );
   }

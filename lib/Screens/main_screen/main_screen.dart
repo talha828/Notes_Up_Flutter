@@ -1,11 +1,11 @@
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:quick_notes/Screens/chat_screen/chat_screen.dart';
+import 'package:quick_notes/Screens/collection_screen/collection_screen.dart';
 import 'package:quick_notes/Screens/splash_screen/splash_screen.dart';
+import 'package:quick_notes/Screens/upload_screen/upload_screen.dart';
 import 'package:quick_notes/constant/constant.dart';
-import 'package:quick_notes/globle_variable.dart';
-import 'package:quick_notes/image_collection/A.dart';
-import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScreen extends StatefulWidget {
@@ -24,9 +24,20 @@ class _MainScreenState extends State<MainScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: themeColor1,
-          title: Text("DashBoard"),
+          iconTheme: IconThemeData(color: themeColor1),
+          backgroundColor: Colors.white,
+          title: Center(
+            child: Text("Notes Up",style:
+            GoogleFonts.montserrat(
+              textStyle: TextStyle(
+                color: themeColor1,
+              ),
+            ),
+            ),
+          ),
+          actions: [
+            Icon(Icons.search,color: Colors.white,)
+          ],
         ),
         bottomNavigationBar:  FancyBottomNavigation(
           initialSelection: 0,
@@ -96,120 +107,5 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-class TempScreen extends StatelessWidget {
-  int num;
-  TempScreen({this.num});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body:Center(
-        child: Text(num.toString()),
-      ),
-    );
-  }
-}
-
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key key}) : super(key: key);
-
-  @override
-  State<ChatScreen> createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends State<ChatScreen> {
-  @override
-  Widget build(BuildContext context) {
-    width=MediaQuery.of(context).size.width;
-    height=MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SvgPicture.asset(A.assets_empty_chat,width: width * 0.5,height: width *0.4,),
-          SizedBox(
-            height:width * 0.06 ,
-          ),
-          Text(TextCollection.text_no_message,style: TextStyle(fontSize: width * 0.06,fontWeight: FontWeight.w100),textAlign: TextAlign.center,),
-          SizedBox(
-            height:width * 0.04 ,
-          ),
-          Text(TextCollection.text_no_message_subtitle_1,style: TextStyle(fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
-          Text(TextCollection.text_no_message_subtitle_2,style: TextStyle(fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
-
-
-        ],
-      ),
-    );
-  }
-}
-
-class UploadScreen extends StatefulWidget {
-  const UploadScreen({Key key}) : super(key: key);
-
-  @override
-  State<UploadScreen> createState() => _UploadScreenState();
-}
-
-class _UploadScreenState extends State<UploadScreen> {
-  @override
-  Widget build(BuildContext context) {
-    width=MediaQuery.of(context).size.width;
-    height=MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SvgPicture.asset(A.assets_upload,width: width * 0.5,height: width *0.4,),
-          SizedBox(
-            height:width * 0.06 ,
-          ),
-          Text(TextCollection.text_no_upload,style: TextStyle(fontSize: width * 0.06,fontWeight: FontWeight.w100),textAlign: TextAlign.center,),
-          SizedBox(
-            height:width * 0.04 ,
-          ),
-          Text(TextCollection.text_no_upload_subtitle_1,style: TextStyle(fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
-          Text(TextCollection.text_no_upload_subtitle_2,style: TextStyle(fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
-
-
-        ],
-      ),
-    );
-  }
-}
-
-class CollectionScreen extends StatefulWidget {
-  const CollectionScreen({Key key}) : super(key: key);
-
-  @override
-  State<CollectionScreen> createState() => _CollectionScreenState();
-}
-
-class _CollectionScreenState extends State<CollectionScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SvgPicture.asset(A.assets_save_collection,width: width * 0.5,height: width *0.4,),
-          SizedBox(
-            height:width * 0.06 ,
-          ),
-          Text(TextCollection.text_no_collection,style: TextStyle(fontSize: width * 0.06,fontWeight: FontWeight.w100),textAlign: TextAlign.center,),
-          SizedBox(
-            height:width * 0.04 ,
-          ),
-          Text(TextCollection.text_no_collection_subtitle_1,style: TextStyle(fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
-          Text(TextCollection.text_no_collection_subtitle_2,style: TextStyle(fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
-
-
-        ],
-      ),
-    );;
-  }
-}
 
