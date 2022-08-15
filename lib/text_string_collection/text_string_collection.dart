@@ -40,6 +40,9 @@ class TextCollection{
   static  final String text_Upload="Upload";
   static  final String text_Upload_from_camera="Upload From Camera";
   static  final String text_no_upload_from_camera_subtitle_1="(only png and jpg are allowed)";
+  static  final String text_note_successfully_uploaded="Note Successfully Uploaded";
+  static  final String text_note_successfully_uploaded_subtitle_1="Hurray! Note Successfully Uploaded ";
+  static  final String text_note_successfully_uploaded_subtitle_2="Keep Learning Keep sharing";
 
 
 }

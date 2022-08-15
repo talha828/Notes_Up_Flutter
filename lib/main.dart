@@ -5,6 +5,7 @@ import 'package:quick_notes/Screens/get_start_screen/share_your_collection_scree
 import 'package:quick_notes/Screens/main_screen/main_screen.dart';
 import 'package:quick_notes/Screens/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quick_notes/Screens/upload_screen/note_successfully_uploaded/note_success_fully_uploaded.dart';
 import 'package:quick_notes/Screens/upload_screen/upload_from_gallery/upload_from_gallery.dart';
 import 'package:quick_notes/Screens/upload_screen/upload_screen.dart';
 import 'package:quick_notes/constant/constant.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
             Theme.of(context).textTheme,
           )
         ),
-        home: MainScreen(),
+        home: NoteSuccessfullyUploaded(),
       ),
     );
   }
