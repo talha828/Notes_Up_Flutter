@@ -100,11 +100,13 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
                                         ),
                                       );
                                     }
-                                  return InkWell(
-                                    onLongPress: (){
-                                      setState(() {
-                                        file.remove(file[index-1]);
-                                      });
+                                  return Dismissible(
+                                    direction: DismissDirection.vertical,
+                                    key: UniqueKey(),
+                                    onDismissed: (direction){
+                                        setState(() {
+                                          file.remove(file[index-1]);
+                                        });
                                     },
                                     child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
