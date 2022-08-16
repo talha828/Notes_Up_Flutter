@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,8 +19,14 @@ class UploadFromGallery extends StatefulWidget {
 }
 
 class _UploadFromGalleryState extends State<UploadFromGallery> {
-  TextEditingController password=TextEditingController();
+  TextEditingController fileName=TextEditingController();
+  TextEditingController author=TextEditingController();
+  TextEditingController grade=TextEditingController();
+  TextEditingController edition=TextEditingController();
+  File pdf;
   bool isLoading=false;
+  String size;
+  String name;
   @override
   Widget build(BuildContext context) {
     width=MediaQuery.of(context).size.width;
@@ -49,12 +58,27 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
                       height: height * 0.25,
                       child:          Column(
                         children: [
-                          Container(
-                              margin: EdgeInsets.symmetric(vertical: width *0.05),
-                              width:width * 0.5,
-                              child: SvgPicture.asset(A.assets_upload,width: width * 0.3,height: width *0.2,)),
-                          Text(TextCollection.text_no_upload_from_gallery,style: TextStyle(fontSize: width * 0.06,fontWeight: FontWeight.w100),textAlign: TextAlign.center,),
-                          Text(TextCollection.text_no_upload_from_gallery_subtitle_1,style: TextStyle(color:Colors.grey,fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
+                          InkWell(
+                            onTap: ()async{
+                              var file=await FilePicker.platform.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: ['pdf'],
+                              );
+                              if(file != null){
+                                pdf=File(file.files.single.path);
+                                double size=file.files.single.size/(1024 *1024);
+                                this.size=size.toStringAsFixed(2);
+                                name=file.files.single.name;
+                                setState(() {});
+                              }
+                            },
+                            child: Container(
+                                margin: EdgeInsets.symmetric(vertical: width *0.05),
+                                width:width * 0.5,
+                                child: SvgPicture.asset(A.assets_upload,width: width * 0.3,height: width *0.2,)),
+                          ),
+                          Text(pdf==null?TextCollection.text_no_upload_from_gallery:TextCollection.text_file_successfully_uploaded,style: TextStyle(fontSize: width * 0.06,fontWeight: FontWeight.w100),textAlign: TextAlign.center,),
+                          Text(pdf==null?TextCollection.text_no_upload_from_gallery_subtitle_1:TextCollection.text_your_file_size_is+"($size).MB" ,style: TextStyle(color:Colors.grey,fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
 
                         ],
                       ),
@@ -66,21 +90,21 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
                       icon: Icons.person,
                       hintText: TextCollection.text_field_name,
                       onChange: (value) {},
-                      controller: password,
+                      controller: fileName,
                     ),
                     QuickTextField(
                       title: TextCollection.text_Author_name,
                       icon: Icons.perm_contact_cal_outlined,
                       hintText: TextCollection.text_Author_name,
                       onChange: (value) {},
-                      controller: password,
+                      controller: author,
                     ),
                     QuickTextField(
                       title: TextCollection.text_grade,
                       icon: Icons.grade_outlined,
                       hintText: TextCollection.text_grade,
                       onChange: (value) {},
-                      controller: password,
+                      controller: grade,
                     ),
 
                     QuickTextField(
@@ -88,11 +112,13 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
                       icon: Icons.edit_attributes_outlined,
                       hintText: TextCollection.text_Edition,
                       onChange: (value) {},
-                      controller: password,
+                      controller: edition,
                     ),
                     MainButton(
                         text: TextCollection.text_Upload,
-                        onTap: (){}),
+                        onTap: (){
+
+                        }),
                   ],
                 ),
               ),

@@ -1,11 +1,14 @@
 import 'dart:io';
-
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:quick_notes/Screens/sign_up_screen/sign_up_screen.dart';
+import 'package:quick_notes/Screens/upload_screen/note_successfully_uploaded/note_success_fully_uploaded.dart';
 import 'package:quick_notes/constant/constant.dart';
 import 'package:quick_notes/custome_widget/main_button.dart';
 import 'package:quick_notes/globle_variable.dart';
@@ -188,7 +191,25 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
                         controller: password,
                       ),
                       MainButton(
-                          text: TextCollection.text_Upload, onTap: () {}),
+                          text: TextCollection.text_Upload, onTap: () async{
+
+                        final pdf = pw.Document();
+                       for(var i in file){
+                         var image = pw.MemoryImage(
+                           i.readAsBytesSync(),
+                         );
+                         pdf.addPage(pw.Page(build: (pw.Context context) {
+                           return
+                             pw.Image(image);// Center
+                         }));
+                         Directory appDocDir = await getApplicationDocumentsDirectory();
+                         final file = File("${appDocDir.path}/example.pdf");
+                         print(file.path);
+                         final bytes = await pdf.save();
+                         await file.writeAsBytes(bytes,flush: true);
+                            print("done");
+                       }
+                      }),
                     ],
                   ),
                 ),
