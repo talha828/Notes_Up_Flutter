@@ -7,6 +7,7 @@ import 'package:quick_notes/Screens/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quick_notes/Screens/upload_screen/upload_from_gallery/upload_from_gallery.dart';
 import 'package:quick_notes/constant/constant.dart';
+import 'package:quick_notes/model/file_details_model.dart';
 import 'package:quick_notes/model/user_model.dart';
 
 import 'Screens/login_screen/login_screen.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<UserModel>(create:(_)=> UserModel()),
+        ChangeNotifierProvider<StoreFile>(create:(_)=> StoreFile()),
       ],
       child: MaterialApp(
         theme: ThemeData(

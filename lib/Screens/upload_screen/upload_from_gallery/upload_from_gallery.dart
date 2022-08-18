@@ -1,9 +1,13 @@
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:quick_notes/Screens/sign_up_screen/sign_up_screen.dart';
 import 'package:quick_notes/constant/constant.dart';
 import 'package:quick_notes/custome_widget/main_button.dart';
@@ -19,12 +23,124 @@ class UploadFromGallery extends StatefulWidget {
 }
 
 class _UploadFromGalleryState extends State<UploadFromGallery> {
+
+  void pickFile()async{
+    var file=await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+    if(file != null){
+      pdf=File(file.files.single.path);
+      double size=file.files.single.size/(1024 *1024);
+      this.size=size.toStringAsFixed(2);
+      name=file.files.single.name;
+      setState(() {});
+    }
+  }
+  bool isLoading=false;
+  setLoading(bool value){
+    setState(() {
+      isLoading=value;
+    });
+  }
+  void postFile(String fileName,String author,String grade,String edition,var then)async{
+    if(fileName != ""){
+      if(author != ""){
+        if(grade != ""){
+          if(edition != ""){
+            setLoading(true);
+            FirebaseStorage _storage = FirebaseStorage.instance;
+            var reference = _storage.ref().child("Pdf/${name}");
+            var uploadTask =await reference.putFile(pdf).snapshot.ref.getDownloadURL();
+              print("The download URL is " + uploadTask.toString());
+            FirebaseAuth _auth = FirebaseAuth.instance;
+            FirebaseDatabase.instance
+                .reference()
+                .child("notes_search_logs")
+                .set({
+              "details":{
+                "file_name":name,
+                "author_name":author,
+                "grade":grade,
+                "edition":edition,
+                "url":uploadTask.toString(),
+                "uid":_auth.currentUser.uid,
+                "search_key":(name+author+grade+edition+_auth.currentUser.uid).trim(),
+              }
+            });
+            FirebaseDatabase.instance
+                .reference()
+                .child("notes_details").child(_auth.currentUser.uid).child(name.replaceAll(".pdf", "").trim())
+                .set({
+              "details":{
+                "file_name":name,
+                "author_name":author,
+                "grade":grade,
+                "edition":edition,
+                "url":uploadTask.toString(),
+                "uid":_auth.currentUser.uid,
+                "search_key":(name+author+grade+edition+_auth.currentUser.uid).trim(),
+              }
+            }).then(then).catchError((e){
+              setLoading(false);
+              Fluttertoast.showToast(
+                  msg: "Somethings went wrong",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+            });
+            }
+            Fluttertoast.showToast(
+              msg: "Please suggest the edition",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+            );
+        }else{
+          Fluttertoast.showToast(
+              msg: "Please fill the grade",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+          );
+        }
+      }else{
+        Fluttertoast.showToast(
+            msg: "Please fill the author name",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+      }
+    }else{
+      Fluttertoast.showToast(
+          msg: "Please suggest the file name",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+  }
+
   TextEditingController fileName=TextEditingController();
   TextEditingController author=TextEditingController();
   TextEditingController grade=TextEditingController();
   TextEditingController edition=TextEditingController();
   File pdf;
-  bool isLoading=false;
   String size;
   String name;
   @override
@@ -59,19 +175,7 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
                       child:          Column(
                         children: [
                           InkWell(
-                            onTap: ()async{
-                              var file=await FilePicker.platform.pickFiles(
-                                type: FileType.custom,
-                                allowedExtensions: ['pdf'],
-                              );
-                              if(file != null){
-                                pdf=File(file.files.single.path);
-                                double size=file.files.single.size/(1024 *1024);
-                                this.size=size.toStringAsFixed(2);
-                                name=file.files.single.name;
-                                setState(() {});
-                              }
-                            },
+                            onTap: ()=>pickFile(),
                             child: Container(
                                 margin: EdgeInsets.symmetric(vertical: width *0.05),
                                 width:width * 0.5,
@@ -116,9 +220,23 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
                     ),
                     MainButton(
                         text: TextCollection.text_Upload,
-                        onTap: (){
-
-                        }),
+                        onTap: ()=>postFile(fileName.text, author.text, grade.text, edition.text, (value){
+                          setLoading(false);
+                          fileName.clear();
+                          author.clear();
+                          grade.clear();
+                          edition.clear();
+                          pdf=null;
+                          setState(() {});
+                          Fluttertoast.showToast(
+                            msg: "Notes Successfully Uploaded",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                          );
+                        })),
                   ],
                 ),
               ),

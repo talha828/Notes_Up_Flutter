@@ -28,6 +28,7 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
   List<File> file = [
 
   ];
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
