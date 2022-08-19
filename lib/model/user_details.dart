@@ -9,14 +9,15 @@ class UserDetails extends ChangeNotifier{
   String institute;
   String grade;
 
-  void saveData(String name,String email,String password,String country,String city,String institute,String grade){
-    this.name=name;
-    this.email=email;
-    this.password=password;
-    this.country=country;
-    this.city=city;
-    this.institute=institute;
-    this.grade=grade;
+  void saveData(Map<String,dynamic>json){
+    this.name=json['name'];
+    this.email=json['email'];
+    this.password=json['password'];
+    this.country=json['country'];
+    this.city=json['city'];
+    this.institute=json['institute'];
+    this.grade=json['grade'];
+    notifyListeners();
   }
 
 }

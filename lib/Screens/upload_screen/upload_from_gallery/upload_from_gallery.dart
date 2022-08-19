@@ -8,7 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:quick_notes/Screens/sign_up_screen/sign_up_screen.dart';
+import 'package:quick_notes/Screens/upload_screen/note_successfully_uploaded/note_success_fully_uploaded.dart';
 import 'package:quick_notes/constant/constant.dart';
 import 'package:quick_notes/custome_widget/main_button.dart';
 import 'package:quick_notes/globle_variable.dart';
@@ -51,7 +53,18 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
             setLoading(true);
             FirebaseStorage _storage = FirebaseStorage.instance;
             var reference = _storage.ref().child("Pdf/${name}");
-            var uploadTask =await reference.putFile(pdf).snapshot.ref.getDownloadURL();
+            var uploadTask =await reference.putFile(pdf).snapshot.ref.getDownloadURL().catchError((e){
+              Fluttertoast.showToast(
+                  msg: "Somethings went wrong",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+              setLoading(false);
+            });
               print("The download URL is " + uploadTask.toString());
             FirebaseAuth _auth = FirebaseAuth.instance;
             FirebaseDatabase.instance
@@ -236,6 +249,7 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
                           );
+                          Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight,duration: Duration(milliseconds: 1500), child: NoteSuccessfullyUploaded()));
                         })),
                   ],
                 ),

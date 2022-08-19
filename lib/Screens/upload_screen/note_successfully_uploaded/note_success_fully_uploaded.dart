@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:quick_notes/Screens/main_screen/main_screen.dart';
 import 'package:quick_notes/constant/constant.dart';
 import 'package:quick_notes/custome_widget/main_button.dart';
 import 'package:quick_notes/globle_variable.dart';
@@ -51,7 +53,8 @@ class _NoteSuccessfullyUploadedState extends State<NoteSuccessfullyUploaded> {
              ),
                 MainButton(
                   text: TextCollection.text_next,
-                  onTap: (){}),
+                  onTap: ()=>        Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight,duration: Duration(milliseconds: 1500), child: MainScreen()))
+  ),
               ],
             ),
           ),

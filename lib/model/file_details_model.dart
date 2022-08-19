@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 class StoreFile extends ChangeNotifier{
   List<FileDetails>list=[];
   getData(Map<String,dynamic> json){
+    list.clear();
     for (var i in json.values){
       print(i['details']["file_name"]);
       list.add(FileDetails.fromJson(i));
@@ -22,7 +23,7 @@ class FileDetails extends ChangeNotifier{
 
   FileDetails.fromJson(var json){
     name=json['details']['file_name'];
-    url=json['details']["author_name"];
+    url=json['details']["url"];
     edition=json['details']['edition'];
     author=json['details']['author_name'];
     grade=json['details']['grade'];
