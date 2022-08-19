@@ -55,7 +55,7 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
             var reference = _storage.ref().child("Pdf/${name}");
             var uploadTask =await reference.putFile(pdf).snapshot.ref.getDownloadURL().catchError((e){
               Fluttertoast.showToast(
-                  msg: "Somethings went wrong",
+                  msg: "Somethings went wrong,try, again",
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.BOTTOM,
                   timeInSecForIosWeb: 1,
@@ -69,7 +69,7 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
             FirebaseAuth _auth = FirebaseAuth.instance;
             FirebaseDatabase.instance
                 .reference()
-                .child("notes_search_logs")
+                .child("notes_search_logs").child(name+author+grade+edition+_auth.currentUser.uid)
                 .set({
               "details":{
                 "file_name":name,

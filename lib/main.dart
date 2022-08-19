@@ -8,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:quick_notes/Screens/upload_screen/upload_from_gallery/upload_from_gallery.dart';
 import 'package:quick_notes/constant/constant.dart';
 import 'package:quick_notes/model/file_details_model.dart';
+import 'package:quick_notes/model/search_notes.dart';
 import 'package:quick_notes/model/user_details.dart';
 import 'package:quick_notes/model/user_model.dart';
 
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UserModel>(create:(_)=> UserModel()),
         ChangeNotifierProvider<StoreFile>(create:(_)=> StoreFile()),
         ChangeNotifierProvider<UserDetails>(create:(_)=> UserDetails()),
+        ChangeNotifierProvider<SearchNotes>(create:(_)=> SearchNotes()),
       ],
       child: MaterialApp(
 

@@ -1,9 +1,11 @@
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_notes/Screens/chat_screen/chat_screen.dart';
 import 'package:quick_notes/Screens/collection_screen/collection_screen.dart';
+import 'package:quick_notes/Screens/notes_search.dart';
 import 'package:quick_notes/Screens/splash_screen/splash_screen.dart';
 import 'package:quick_notes/Screens/upload_screen/upload_screen.dart';
 import 'package:quick_notes/constant/constant.dart';
@@ -51,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
                 child: IconButton(
                  icon:Icon( Icons.search,
                      color: themeColor1),
-                  onPressed: (){},
+                  onPressed: ()=>        Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight,duration: Duration(milliseconds: 1500), child: NotesSearch())),
                 ),
               )
             ],

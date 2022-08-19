@@ -45,4 +45,5 @@ class TextCollection{
   static  final String text_note_successfully_uploaded_subtitle_2="Keep Learning Keep sharing";
   static  final String text_file_successfully_uploaded="File Successfully Selected";
   static  final String text_your_file_size_is="your File size is ";
+  static  final String text_search_notes="Search Notes";
 }

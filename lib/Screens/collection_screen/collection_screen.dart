@@ -76,7 +76,8 @@ class _CollectionScreenState extends State<CollectionScreen> {
 
 
         ],
-      ):ListView.separated(
+      ):
+      ListView.separated(
         separatorBuilder: (context,index){
           return SizedBox(height:0, );
         },

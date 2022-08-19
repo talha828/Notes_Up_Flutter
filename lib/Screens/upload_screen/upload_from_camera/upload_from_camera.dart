@@ -1,4 +1,9 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -23,12 +28,137 @@ class UploadFromCamera extends StatefulWidget {
 }
 
 class _UploadFromCameraState extends State<UploadFromCamera> {
-  TextEditingController password = TextEditingController();
+  TextEditingController filename = TextEditingController();
+  TextEditingController author = TextEditingController();
+  TextEditingController grade = TextEditingController();
+  TextEditingController edition = TextEditingController();
   bool isLoading = false;
-  List<File> file = [
+  List<File> image = [];
 
-  ];
+  postData(String filename,String author,String grade,String edition,var then)async{
+    if(filename!=""){
+      if(author != ""){
+        if(grade != ""){
+          if(edition != ""){
+            setLoading(true);
+            final pdf = pw.Document();
+            for(var i in image){
+              var image = pw.MemoryImage(
+                i.readAsBytesSync(),
+              );
+              pdf.addPage(pw.Page(build: (pw.Context context) {
+                return
+                  pw.Image(image);// Center
+              }));
+            }
+            Directory appDocDir = await getApplicationDocumentsDirectory();
+            final file = File("${appDocDir.path}/example.pdf");
+            print(file.path);
+            final bytes = await pdf.save();
+            await file.writeAsBytes(bytes,flush: true);
+            FirebaseStorage _storage = FirebaseStorage.instance;
+            var reference = _storage.ref().child("Pdf/${filename}");
+            var uploadTask =await reference.putFile(file).snapshot.ref.getDownloadURL().then((value){
+              FirebaseAuth _auth = FirebaseAuth.instance;
+              FirebaseDatabase.instance
+                  .reference()
+                  .child("notes_search_logs").child(filename+author+grade+edition+_auth.currentUser.uid)
+                  .set({
+                "details":{
+                  "file_name":filename,
+                  "author_name":author,
+                  "grade":grade,
+                  "edition":edition,
+                  "url":value.toString(),
+                  "uid":_auth.currentUser.uid,
+                  "search_key":(filename+author+grade+edition+_auth.currentUser.uid).trim(),
+                }
+              });
+              FirebaseDatabase.instance
+                  .reference()
+                  .child("notes_details").child(_auth.currentUser.uid).child(filename.replaceAll(".pdf", "").trim())
+                  .set({
+                "details":{
+                  "file_name":filename,
+                  "author_name":author,
+                  "grade":grade,
+                  "edition":edition,
+                  "url":value.toString(),
+                  "uid":_auth.currentUser.uid,
+                  "search_key":(filename+author+grade+edition+_auth.currentUser.uid).trim(),
+                }
+              }).then(then).catchError((e){
+                setLoading(false);
+                Fluttertoast.showToast(
+                    msg: "Somethings went wrong",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.black,
+                    textColor: Colors.white,
+                    fontSize: 16.0
+                );
+              });
+            }).catchError((onError){
+              setLoading(false);
+              print(onError.toString());
+              Fluttertoast.showToast(
+                  msg: "Somethings went wrong,try again",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+            });
 
+          }else{
+            Fluttertoast.showToast(
+              msg: "file name in empty",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+            );
+          }
+        }else{
+          Fluttertoast.showToast(
+            msg: "author name is empty",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+          );
+        }
+      }else{
+        Fluttertoast.showToast(
+          msg: "grade is empty",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+        );
+      }
+    }else{
+      Fluttertoast.showToast(
+        msg: "Please suggest the edition",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+      );
+    }
+  }
+  setLoading(bool value){
+    setState(() {
+      isLoading=value;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -63,12 +193,12 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
                         onTap: () async {
                           var camera = await Permission.camera.request();
                           var gallery = await Permission.storage.request();
-                          File image = await ImagePicker.pickImage(
+                          File images = await ImagePicker.pickImage(
                               source: ImageSource.camera);
-                          file.add(image);
+                          image.add(images);
                           setState(() {});
                         },
-                        child: file.length > 0
+                        child: image.length > 0
                             ? Container(
                                 height: height * 0.25,
                                 child: ListView.separated(
@@ -77,16 +207,16 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
                                   },
                                   shrinkWrap: true,
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: file.length+1,
+                                  itemCount: image.length+1,
                                     itemBuilder: (context, index) {
                                     if(index==0){
                                       return InkWell(
                                         onTap: ()async{
                                           var camera = await Permission.camera.request();
                                           var gallery = await Permission.storage.request();
-                                          File image = await ImagePicker.pickImage(
+                                          File images = await ImagePicker.pickImage(
                                               source: ImageSource.camera);
-                                          file.add(image);
+                                          image.add(images);
                                           setState(() {});
                                         },
                                         child: ClipRRect(
@@ -109,13 +239,13 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
                                     key: UniqueKey(),
                                     onDismissed: (direction){
                                         setState(() {
-                                          file.remove(file[index-1]);
+                                          image.remove(image[index-1]);
                                         });
                                     },
                                     child: ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
                                         child: Image.file(
-                                          File(file[index-1].path),
+                                          File(image[index-1].path),
                                           fit: BoxFit.fill,
                                         )),
                                   );
@@ -167,21 +297,21 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
                         icon: Icons.person,
                         hintText: TextCollection.text_field_name,
                         onChange: (value) {},
-                        controller: password,
+                        controller: filename,
                       ),
                       QuickTextField(
                         title: TextCollection.text_Author_name,
                         icon: Icons.perm_contact_cal_outlined,
                         hintText: TextCollection.text_Author_name,
                         onChange: (value) {},
-                        controller: password,
+                        controller: author,
                       ),
                       QuickTextField(
                         title: TextCollection.text_grade,
                         icon: Icons.grade_outlined,
                         hintText: TextCollection.text_grade,
                         onChange: (value) {},
-                        controller: password,
+                        controller: grade,
                       ),
 
                       QuickTextField(
@@ -189,28 +319,28 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
                         icon: Icons.edit_attributes_outlined,
                         hintText: TextCollection.text_Edition,
                         onChange: (value) {},
-                        controller: password,
+                        controller: edition,
                       ),
                       MainButton(
-                          text: TextCollection.text_Upload, onTap: () async{
-
-                        final pdf = pw.Document();
-                       for(var i in file){
-                         var image = pw.MemoryImage(
-                           i.readAsBytesSync(),
-                         );
-                         pdf.addPage(pw.Page(build: (pw.Context context) {
-                           return
-                             pw.Image(image);// Center
-                         }));
-                         Directory appDocDir = await getApplicationDocumentsDirectory();
-                         final file = File("${appDocDir.path}/example.pdf");
-                         print(file.path);
-                         final bytes = await pdf.save();
-                         await file.writeAsBytes(bytes,flush: true);
-                            print("done");
-                       }
-                      }),
+                          text: TextCollection.text_Upload, onTap:()=> postData(filename.text, author.text, grade.text, edition.text, (value){
+                        setLoading(false);
+                        filename.clear();
+                        author.clear();
+                        grade.clear();
+                        edition.clear();
+                        image=[];
+                        setState(() {});
+                        Fluttertoast.showToast(
+                          msg: "Notes Successfully Uploaded",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                        );
+                        Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight,duration: Duration(milliseconds: 1500), child: NoteSuccessfullyUploaded()));
+                      })
+                      ),
                     ],
                   ),
                 ),
