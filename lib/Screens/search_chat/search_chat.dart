@@ -6,58 +6,59 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_notes/Screens/chat_room/chat_room_screen.dart';
 import 'package:quick_notes/Screens/sign_up_screen/sign_up_screen.dart';
 import 'package:quick_notes/constant/constant.dart';
 import 'package:quick_notes/globle_variable.dart';
 import 'package:quick_notes/image_collection/A.dart';
+import 'package:quick_notes/model/search_chat_model.dart';
 import 'package:quick_notes/model/search_notes.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class NotesSearch extends StatefulWidget {
-  const NotesSearch({Key key}) : super(key: key);
+class ChatSearch extends StatefulWidget {
+  const ChatSearch({Key key}) : super(key: key);
 
   @override
-  State<NotesSearch> createState() => _NotesSearchState();
+  State<ChatSearch> createState() => _ChatSearchState();
 }
 
-class _NotesSearchState extends State<NotesSearch> {
+class _ChatSearchState extends State<ChatSearch> {
   TextEditingController search=TextEditingController();
 
-  getData(){
-    Provider.of<SearchNotes>(context,listen: false).clearKeys();
-    Provider.of<SearchNotes>(context,listen: false).clearFiles();
+  getUserData()async{
     FirebaseAuth _auth=FirebaseAuth.instance;
+    Provider.of<SearchChatModel>(context,listen: false).clearUser();
+    List<UsersDetails>list=[];
     DatabaseReference ref3 =
-    FirebaseDatabase.instance.reference().child('notes_search_logs');
+    FirebaseDatabase.instance.reference().child('userinfo');
     Stream<Event> streams = ref3.onValue;
     streams.forEach((value) {
-      //print(value.snapshot.key);
+      print(value.snapshot.key);
+      print(value.snapshot.value.toString());
       value.snapshot.value.forEach((key,value){
-        //print(key);
-        Provider.of<SearchNotes>(context,listen: false).storeKeys(key.toString());
-        value.forEach((key,value){
-          Provider.of<SearchNotes>(context,listen: false).storeFiles(new Map<String,dynamic>.from(value));
-        });
+        print(key);
+        print(value.toString());
+        Provider.of<SearchChatModel>(context,listen: false).storeUsers(UsersDetails.fromJson(new Map<String,dynamic>.from(value["details"])));
       });
     });
   }
   @override
   void initState() {
-    getData();
+    getUserData();
     super.initState();
   }
-  List<FileDetails>file=[];
+  List<UsersDetails>file=[];
   @override
   Widget build(BuildContext context) {
-    var data=Provider.of<SearchNotes>(context);
+    var data=Provider.of<SearchChatModel>(context).detail;
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: themeColor1),
         backgroundColor: Colors.white,
         title: Center(
           child: Text(
-            "Search Notes",
+            "Search Friend",
             style: GoogleFonts.montserrat(
               textStyle: TextStyle(
                 color: themeColor1,
@@ -82,23 +83,23 @@ class _NotesSearchState extends State<NotesSearch> {
           children: [
             Container(
               decoration: BoxDecoration(
-                border: Border.all(color: themeColor1),
-                borderRadius: BorderRadius.circular(width * 0.01)
+                  border: Border.all(color: themeColor1),
+                  borderRadius: BorderRadius.circular(width * 0.01)
               ),
               child:TextField(
                 onChanged: (value){
                   file.clear();
-                  for(int i=0;i<data.searchKeys.length;i++){
-                    if(data.searchKeys[i].contains(value)){
-                     file.add(data.fileDetails[i]);
+                  for(int i=0;i<data.length;i++){
+                    if(data[i].name.contains(value)){
+                      file.add(data[i]);
                     }
                   }
                   setState(() {});
                 },
                 decoration: InputDecoration(
-                    focusedBorder: InputBorder.none,
-                    hintText: TextCollection.text_search_notes,
-                  contentPadding: EdgeInsets.symmetric(horizontal: width * 0.04)
+                  focusedBorder: InputBorder.none,
+                    hintText: "Search Friend Name",
+                    contentPadding: EdgeInsets.symmetric(horizontal: width * 0.04)
                 ),
               ),
             ),
@@ -108,7 +109,7 @@ class _NotesSearchState extends State<NotesSearch> {
             file.length<1?Expanded(
               child: Container(
                   margin: EdgeInsets.symmetric(vertical: width *0.05),
-                  width:width * 0.5,  
+                  width:width * 0.5,
                   child: Center(child: SvgPicture.asset(A.assets_upload,width: width * 0.3,height: width *0.2,))),
             ):Expanded(
               child: ListView.separated(
@@ -142,7 +143,7 @@ class _NotesSearchState extends State<NotesSearch> {
                             SizedBox(
                               height: width * 0.02,
                             ),
-                            Text(file[index].author.toUpperCase(),
+                            Text(file[index].email.toUpperCase(),
                               style: TextStyle(
                                   color: themeColor1,
                                   fontSize: width * 0.040
@@ -151,7 +152,7 @@ class _NotesSearchState extends State<NotesSearch> {
                             SizedBox(
                               height: width * 0.02,
                             ),
-                            Row(
+                            Column(
                               children: [
 
                                 Row(
@@ -172,21 +173,23 @@ class _NotesSearchState extends State<NotesSearch> {
                                   ],
                                 ),
                                 SizedBox(
-                                  width: width * 0.04,
+                                  height: width * 0.02,
                                 ),
                                 Row(
                                   children: [
-                                    Text("Edition: ",
+                                    Text("Institute: ",
                                       style: TextStyle(
                                           color: themeColor1,
                                           fontSize: width * 0.040,
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
-                                    Text(file[index].edition.toUpperCase(),
-                                      style: TextStyle(
-                                          color: themeColor1,
-                                          fontSize: width * 0.040
+                                    FittedBox(
+                                      child: Text(file[index].institute.toUpperCase(),
+                                        style: TextStyle(
+                                            color: themeColor1,
+                                            fontSize: width * 0.040
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -224,15 +227,7 @@ class _NotesSearchState extends State<NotesSearch> {
                                 ),
                                 InkWell(
                                   onTap: ()async{
-                                    await canLaunch(file[index].url) ? await launch(file[index].url) : Fluttertoast.showToast(
-                                        msg: "Somethings went wrong",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.BOTTOM,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.black,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0
-                                    );
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatRoom(friend: data[index],)));
                                   }  ,
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -241,14 +236,14 @@ class _NotesSearchState extends State<NotesSearch> {
                                     ),
                                     padding: EdgeInsets.symmetric(vertical: width *0.015,horizontal: width *0.035),
                                     child: Row(children: [
-                                      Text("Download",style: TextStyle(
+                                      Text("Chat Now",style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 10
                                       ),),
                                       SizedBox(
                                         width: width * 0.02,
                                       ),
-                                      Icon(Icons.download,color: Colors.white,size: width *0.04,)
+                                      Icon(Icons.message,color: Colors.white,size: width *0.04,)
                                     ],),
                                   ),
                                 )

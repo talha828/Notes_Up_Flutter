@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 import 'package:quick_notes/Screens/main_screen/main_screen.dart';
 import 'package:quick_notes/Screens/sign_up_screen/sign_up_screen.dart';
 import 'package:quick_notes/backend/auth/auth.dart';
@@ -11,6 +13,7 @@ import 'package:quick_notes/constant/constant.dart';
 import 'package:quick_notes/custome_widget/main_button.dart';
 import 'package:quick_notes/globle_variable.dart';
 import 'package:quick_notes/image_collection/A.dart';
+import 'package:quick_notes/model/user_details.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool value = true;
   bool isLoading=false;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     width=MediaQuery.of(context).size.width;
     height=MediaQuery.of(context).size.height;
     return SafeArea(child: Scaffold(
@@ -86,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             FirebaseAuth _auth=FirebaseAuth.instance;
                             _auth.sendPasswordResetEmail(email: email.text).then((value) {
                               Fluttertoast.showToast(
-                                  msg: "Check your Email",
+                                  msg: "Login successful",
                                   toastLength: Toast.LENGTH_SHORT,
                                   gravity: ToastGravity.BOTTOM,
                                   timeInSecForIosWeb: 1,
@@ -116,12 +119,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   MainButton(
                     text: TextCollection.text_next,
                     onTap: ()=>Auth.loginUser(email.text,password.text,(value){
+
                       setState(() {
                         isLoading=value;
                       });
                     },(value)async{SharedPreferences pref= await SharedPreferences.getInstance();
                     pref.setString("email", email.text);
                     pref.setString("password", password.text);
+                    FirebaseAuth _auth= FirebaseAuth.instance;
+                    var ref3=FirebaseDatabase.instance.reference().child('userinfo').child(_auth.currentUser.uid);
+                    Stream<Event> streams = ref3.onValue;
+                    streams.forEach((value) {
+                      print("key" +value.snapshot.key);
+                      print("Value" +value.snapshot.value['details'].toString());
+                      Provider.of<UserDetails>(context,listen: false).saveData(new Map<String,dynamic>.from(value.snapshot.value['details']));
+                    });
                       Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 1000), child: MainScreen()));
                     },),),
                   SizedBox(

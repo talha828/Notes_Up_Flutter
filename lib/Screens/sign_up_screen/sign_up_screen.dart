@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,6 +13,7 @@ import 'package:quick_notes/Screens/welcome_screen/welcome_screen.dart';
 import 'package:quick_notes/backend/auth/auth.dart';
 import 'package:quick_notes/custome_widget/main_button.dart';
 import 'package:quick_notes/globle_variable.dart';
+import 'package:quick_notes/model/user_details.dart';
 import 'package:quick_notes/model/user_model.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -94,12 +97,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           SharedPreferences pref= await SharedPreferences.getInstance();
                           pref.setString("email", email.text);
                           pref.setString("password", password.text);
-                            Provider.of<UserModel>(context, listen: false).storeDetails(
-                                name.text,
-                                email.text,
-                                password.text);
+                            Provider.of<UserModel>(context, listen: false).storeDetails(name.text, email.text, password.text);
                             setLoading(false);
-                            Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 1000), child: FillYourDetailsScreen()));
+                          FirebaseAuth _auth= FirebaseAuth.instance;
+                          var ref3=FirebaseDatabase.instance.reference().child('userinfo').child(_auth.currentUser.uid);
+                          Stream<Event> streams = ref3.onValue;
+                          streams.forEach((value) {
+                            print("key" +value.snapshot.key);
+                            print("Value" +value.snapshot.value['details'].toString());
+                            Provider.of<UserDetails>(context,listen: false).saveData(new Map<String,dynamic>.from(value.snapshot.value['details']));});
+    Provider.of<UserDetails>(context,listen: false).saveData(new Map<String,dynamic>.from(value.snapshot.value['details']));
+    Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 1000), child: FillYourDetailsScreen()));
                           },(loading){
                               setState(() {
                                 isLoading = loading;

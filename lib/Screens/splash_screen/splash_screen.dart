@@ -46,6 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
             textColor: Colors.white,
             fontSize: 16.0
         );
+        Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight,duration: Duration(milliseconds: 1500), child: ShareYourCollection()));
       });
     }
     else{
