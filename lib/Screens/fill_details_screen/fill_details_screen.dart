@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +10,7 @@ import 'package:quick_notes/backend/database/database.dart';
 import 'package:quick_notes/custome_widget/main_button.dart';
 import 'package:quick_notes/globle_variable.dart';
 import 'package:quick_notes/image_collection/A.dart';
+import 'package:quick_notes/model/user_details.dart';
 import 'package:quick_notes/model/user_model.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 
@@ -89,9 +92,16 @@ class _FillYourDetailsScreenState extends State<FillYourDetailsScreen> {
                     MainButton(
                         text: TextCollection.text_Sign_up,
                         onTap: (){
-                          Database().storeUserSignUpData(user.name, user.email, user.password, country.text, city.text, school.text, grade.text, (value){
-                            setLoading(false);
+                          Database().storeUserSignUpData(user.name, user.email, user.password, country.text, city.text, school.text, grade.text, (value)async{
+                            FirebaseAuth _auth= FirebaseAuth.instance;
+                            var ref3=FirebaseDatabase.instance.reference().child('userinfo').child(_auth.currentUser.uid);
+                            Stream<Event> streams = ref3.onValue;
+                            streams.forEach((value) async{
+                              print("key" +value.snapshot.key);
+                              print("Value" +value.snapshot.value['details'].toString());
+                                Provider.of<UserDetails>(context,listen: false).saveData(new Map<String,dynamic>.from(value.snapshot.value['details']));});
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>MainScreen()));
+                            setLoading(false);
                           },(value){
                             setState(() {
                               isLoading=value;

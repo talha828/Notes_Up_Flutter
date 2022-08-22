@@ -99,14 +99,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           pref.setString("password", password.text);
                             Provider.of<UserModel>(context, listen: false).storeDetails(name.text, email.text, password.text);
                             setLoading(false);
-                          FirebaseAuth _auth= FirebaseAuth.instance;
-                          var ref3=FirebaseDatabase.instance.reference().child('userinfo').child(_auth.currentUser.uid);
-                          Stream<Event> streams = ref3.onValue;
-                          streams.forEach((value) {
-                            print("key" +value.snapshot.key);
-                            print("Value" +value.snapshot.value['details'].toString());
-                            Provider.of<UserDetails>(context,listen: false).saveData(new Map<String,dynamic>.from(value.snapshot.value['details']));});
-    Provider.of<UserDetails>(context,listen: false).saveData(new Map<String,dynamic>.from(value.snapshot.value['details']));
     Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 1000), child: FillYourDetailsScreen()));
                           },(loading){
                               setState(() {

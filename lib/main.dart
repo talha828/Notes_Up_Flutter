@@ -7,6 +7,7 @@ import 'package:quick_notes/Screens/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quick_notes/Screens/upload_screen/upload_from_gallery/upload_from_gallery.dart';
 import 'package:quick_notes/constant/constant.dart';
+import 'package:quick_notes/model/chat_model.dart';
 import 'package:quick_notes/model/file_details_model.dart';
 import 'package:quick_notes/model/search_chat_model.dart';
 import 'package:quick_notes/model/search_notes.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<UserDetails>(create:(_)=> UserDetails()),
         ChangeNotifierProvider<SearchNotes>(create:(_)=> SearchNotes()),
         ChangeNotifierProvider<SearchChatModel>(create:(_)=> SearchChatModel()),
+        ChangeNotifierProvider<ChatList>(create:(_)=> ChatList()),
       ],
       child: MaterialApp(
 

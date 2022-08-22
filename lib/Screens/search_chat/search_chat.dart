@@ -51,11 +51,15 @@ class _ChatSearchState extends State<ChatSearch> {
   List<UsersDetails>file=[];
   @override
   Widget build(BuildContext context) {
+    width =MediaQuery.of(context).size.width;
     var data=Provider.of<SearchChatModel>(context).detail;
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: themeColor1),
         backgroundColor: Colors.white,
+        leading: InkWell(
+            onTap: ()=>Navigator.pop(context),
+            child: Icon(Icons.arrow_back_ios_rounded,color: themeColor1,)),
         title: Center(
           child: Text(
             "Search Friend",
@@ -113,6 +117,7 @@ class _ChatSearchState extends State<ChatSearch> {
                   child: Center(child: SvgPicture.asset(A.assets_upload,width: width * 0.3,height: width *0.2,))),
             ):Expanded(
               child: ListView.separated(
+
                   separatorBuilder: (context,index){
                     return SizedBox(height:width * 0.05, );
                   },
@@ -226,9 +231,8 @@ class _ChatSearchState extends State<ChatSearch> {
                                   ],
                                 ),
                                 InkWell(
-                                  onTap: ()async{
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatRoom(friend: data[index],)));
-                                  }  ,
+                                  onTap: ()=>
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatRoom(friend: file[index],check: false,))),
                                   child: Container(
                                     decoration: BoxDecoration(
                                         color: themeColor1,

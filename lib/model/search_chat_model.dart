@@ -23,6 +23,7 @@ class UsersDetails{
   String institute;
   String grade;
   String uid;
+  String timestamp;
   UsersDetails();
     UsersDetails.fromJson(Map<String,dynamic>json){
     this.name=json['name'];
@@ -32,7 +33,8 @@ class UsersDetails{
     this.city=json['city'];
     this.institute=json['institute'];
     this.grade=json['grade'];
-    this.uid=json['uid'];
+    this.uid=json['uid'].toString()=="null"?json['receiver']:json['uid'];
+    this.timestamp=json['timestamp'];
   }
 
 }

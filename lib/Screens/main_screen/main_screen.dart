@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_notes/Screens/chat_screen/chat_screen.dart';
 import 'package:quick_notes/Screens/collection_screen/collection_screen.dart';
+import 'package:quick_notes/Screens/contact_us_screen/contact_us_screen.dart';
 import 'package:quick_notes/Screens/notes_search.dart';
 import 'package:quick_notes/Screens/splash_screen/splash_screen.dart';
 import 'package:quick_notes/Screens/upload_screen/upload_screen.dart';
@@ -108,22 +109,12 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.settings,
-                    color: themeColor1,
-                  ),
-                  title: Text("Settings"),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(
                     Icons.contacts,
                     color: themeColor1,
                   ),
                   title: Text("Contact Us"),
                   onTap: () {
-                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ContactUsScreen()));
                   },
                 ),
                 ListTile(
