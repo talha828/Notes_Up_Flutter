@@ -51,29 +51,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: themeColor1),
-        backgroundColor: Colors.white,
-        title: Center(
-          child: Text(
-            "Edit Profile",
-            style: GoogleFonts.montserrat(
-              textStyle: TextStyle(
-                color: themeColor1,
-              ),
-            ),
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.all(width * 00.02),
-            child: IconButton(
-              icon: Icon(Icons.search, color: Colors.white),
-              onPressed: () {},
-            ),
-          )
-        ],
-      ),
+      // appBar: AppBar(
+      //   iconTheme: IconThemeData(color: themeColor1),
+      //   backgroundColor: Colors.white,
+      //   title: Center(
+      //     child: Text(
+      //       "Edit Profile",
+      //       style: GoogleFonts.montserrat(
+      //         textStyle: TextStyle(
+      //           color: themeColor1,
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      //   actions: [
+      //     Padding(
+      //       padding: EdgeInsets.all(width * 00.02),
+      //       child: IconButton(
+      //         icon: Icon(Icons.search, color: Colors.white),
+      //         onPressed: () {},
+      //       ),
+      //     )
+      //   ],
+      // ),
       body: Stack(
         children: [
           SingleChildScrollView(

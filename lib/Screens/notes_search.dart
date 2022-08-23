@@ -23,7 +23,7 @@ class NotesSearch extends StatefulWidget {
 
 class _NotesSearchState extends State<NotesSearch> {
   TextEditingController search=TextEditingController();
-
+  int num=0;
   getData(){
     Provider.of<SearchNotes>(context,listen: false).clearKeys();
     Provider.of<SearchNotes>(context,listen: false).clearFiles();
@@ -79,7 +79,77 @@ class _NotesSearchState extends State<NotesSearch> {
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: width * 0.07,vertical: width * 0.07),
         child: Column(
+
           children: [
+            SizedBox(
+              height: width * 0.02,
+            ),
+            Container(child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  onTap:(){
+                      setState(() {
+                        num=0;
+                      });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: themeColor1),
+                      borderRadius: BorderRadius.circular(5),
+                      color: num==0?themeColor1:Colors.white,
+                    ),
+
+                    padding:EdgeInsets.symmetric(vertical: width * 0.04,horizontal: width * 0.04),
+                    child: Text("File ",style: TextStyle(
+                      color: num==0?Colors.white:themeColor1
+                    ),),
+                  ),
+                ),
+                InkWell(
+                  onTap: (){
+                    setState(() {
+                      num=1;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: themeColor1),
+                      borderRadius: BorderRadius.circular(5),
+                      color: num==1?themeColor1:Colors.white,
+                    ),
+
+                    padding:EdgeInsets.symmetric(vertical: width * 0.04,horizontal: width * 0.04),
+                    child: Text("Author",style: TextStyle(
+                        color: num==1?Colors.white:themeColor1
+                    ),),
+                  ),
+                ),
+                InkWell(
+                  onTap: (){
+                    setState(() {
+                      num=2;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: themeColor1),
+                      borderRadius: BorderRadius.circular(5),
+                      color: num==2?themeColor1:Colors.white,
+                    ),
+                    padding:EdgeInsets.symmetric(vertical: width * 0.04,horizontal: width * 0.04),
+                    child: Text("Intitute",style: TextStyle(
+                        color: num==2?Colors.white:themeColor1
+                    ),),
+                  ),
+                ),
+              ],
+            )
+            ),
+            SizedBox(
+              height: width * 0.05,
+            ),
             Container(
               decoration: BoxDecoration(
                 border: Border.all(color: themeColor1),

@@ -7,6 +7,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_notes/Screens/chat_screen/chat_screen.dart';
 import 'package:quick_notes/Screens/edit_profile_screen/edit_profile_screen.dart';
+import 'package:quick_notes/Screens/upload_screen/upload_screen.dart';
 import 'package:quick_notes/constant/constant.dart';
 import 'package:quick_notes/globle_variable.dart';
 import 'package:quick_notes/image_collection/A.dart';
@@ -46,12 +47,12 @@ class _HomePageState extends State<HomePage> {
                     btnOkOnPress: () {},
                   )..show();
                 },
-                title: "Find your School",
+                title: "Find School",
                 image: A.assets_sign_up,
               ),
               HomeScreenCard(
-                onTap: ()=> Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight,duration: Duration(milliseconds: 1500), child: NotesSearch())) ,
-                title: "Search Notes",
+                onTap: ()=> Navigator.push(context,MaterialPageRoute(builder: (context)=>UploadScreen())),
+                title: "Upload Notes",
                 image: A.assets_search_notes,
               ),
             ],
@@ -63,9 +64,19 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               HomeScreenCard(
-                title: "Chat with friend",
+                title: "your Trades",
                 image: A.assets_empty_chat,
-                onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>ChatScreen())),
+                onTap: (){
+                  AwesomeDialog(
+                    context: context,
+                    dialogType: DialogType.INFO,
+                    animType: AnimType.BOTTOMSLIDE,
+                    title: 'Coming Soon',
+                    desc: "this feature will add on next version",
+                    btnOkColor: themeColor1,
+                    btnOkOnPress: () {},
+                  )..show();
+                },
               ),
               HomeScreenCard(
                 title: "Edit Profile",

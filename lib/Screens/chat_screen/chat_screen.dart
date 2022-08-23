@@ -84,7 +84,8 @@ class _ChatScreenState extends State<ChatScreen> {
           )
         ],
       ),
-      body: chat.length<1?Column(
+      body: chat.length<1?
+      Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
