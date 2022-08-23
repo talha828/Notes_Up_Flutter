@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:quick_notes/Screens/chat_room/chat_room_screen.dart';
 import 'package:quick_notes/Screens/search_chat/search_chat.dart';
@@ -59,6 +60,30 @@ class _ChatScreenState extends State<ChatScreen> {
     height=MediaQuery.of(context).size.height;
     var data=Provider.of<SearchChatModel>(context).detail;
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: themeColor1),
+        backgroundColor: Colors.white,
+        title: Center(
+          child: Text(
+            "Chat Board",
+            style: GoogleFonts.montserrat(
+              textStyle: TextStyle(
+                color: themeColor1,
+              ),
+            ),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.all(width * 00.02),
+            child: IconButton(
+              icon:Icon( Icons.search,
+                  color: Colors.white),
+              onPressed: (){},
+            ),
+          )
+        ],
+      ),
       body: chat.length<1?Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,

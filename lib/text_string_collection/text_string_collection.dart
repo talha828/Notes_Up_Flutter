@@ -37,6 +37,7 @@ class TextCollection{
   static  final String text_Author_name="Author Name";
   static  final String text_Grade="Grade";
   static  final String text_Edition="Edition";
+  static  final String text_Edit="Edit";
   static  final String text_Upload="Upload";
   static  final String text_Upload_from_camera="Upload From Camera";
   static  final String text_no_upload_from_camera_subtitle_1="(only png and jpg are allowed)";

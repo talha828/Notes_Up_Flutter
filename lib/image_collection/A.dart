@@ -11,4 +11,7 @@ static  final String assets_login="assets/image/login.svg";
 static  final String assets_upload="assets/image/upload.svg";
 static  final String assets_save_collection="assets/image/save_collection.svg";
 static  final String assets_success="assets/image/success.svg";
+static  final String assets_profile = 'assets/image/profile.svg';
+static  final String assets_school = 'assets/image/school.svg';
+static  final String assets_search_notes = 'assets/image/search_notes.svg';
 }

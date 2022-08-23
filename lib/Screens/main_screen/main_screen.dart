@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:quick_notes/Screens/chat_screen/chat_screen.dart';
 import 'package:quick_notes/Screens/collection_screen/collection_screen.dart';
 import 'package:quick_notes/Screens/contact_us_screen/contact_us_screen.dart';
+import 'package:quick_notes/Screens/home_screen/home_screen.dart';
 import 'package:quick_notes/Screens/notes_search.dart';
 import 'package:quick_notes/Screens/splash_screen/splash_screen.dart';
 import 'package:quick_notes/Screens/upload_screen/upload_screen.dart';
@@ -24,7 +25,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int currentPage = 0;
   List page = [
-    ChatScreen(),
+    HomePage(),
     UploadScreen(),
     CollectionScreen(),
   ];
@@ -53,8 +54,8 @@ class _MainScreenState extends State<MainScreen> {
                 padding: EdgeInsets.all(width * 00.02),
                 child: IconButton(
                  icon:Icon( Icons.search,
-                     color: themeColor1),
-                  onPressed: ()=>        Navigator.push(context, PageTransition(type: PageTransitionType.leftToRight,duration: Duration(milliseconds: 1500), child: NotesSearch())),
+                     color: Colors.white),
+                  onPressed: (){},
                 ),
               )
             ],
@@ -64,7 +65,8 @@ class _MainScreenState extends State<MainScreen> {
             circleColor: themeColor1,
             inactiveIconColor: themeColor1,
             tabs: [
-              TabData(iconData: Icons.message_outlined, title: "Chat Board"),
+              TabData(iconData: Icons.home, title: "Home"),
+
               TabData(iconData: Icons.upload, title: "Upload"),
               TabData(iconData: Icons.collections_bookmark, title: "Collection")
             ],

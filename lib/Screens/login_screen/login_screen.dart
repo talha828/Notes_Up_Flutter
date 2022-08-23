@@ -25,130 +25,162 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController password=TextEditingController();
-  TextEditingController email=TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController email = TextEditingController();
   bool value = true;
-  bool isLoading=false;
+  bool isLoading = false;
   @override
-  Widget build(BuildContext context){
-    width=MediaQuery.of(context).size.width;
-    height=MediaQuery.of(context).size.height;
-    return SafeArea(child: Scaffold(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: width * 0.08),
-              height: height,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    height: width * 0.02,
-                  ),
-                  SvgPicture.asset(A.assets_login,width: width *0.4,height:width *0.5 ,),
-                  Text(
-                    TextCollection.text_login,
-                    style: TextStyle(
-                        fontSize: width * 0.077, fontWeight: FontWeight.bold),
-                  ),
-                  QuickTextField(
-                    title: TextCollection.text_field_email,
-                    icon: Icons.email,
-                    hintText: TextCollection.text_field_email,
-                    onChange: (value) {},
-                    controller: email,
-                  ),
-                  QuickTextField(
-                    title: TextCollection.text_field_password,
-                    icon: Icons.password,
-                    hintText: TextCollection.text_field_name,
-                    onChange: (value) {},
-                    controller: password,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(child: Row(
-                        children: [
-                          Checkbox(
-                            activeColor: themeColor1,
-                            value: this.value,
-                            onChanged: (bool value) {
-                              setState(() {
-                                this.value = value;
-                              });
-                            },
-                          ),
-                          Text(TextCollection.text_Remember_Me,style: TextStyle(fontWeight: FontWeight.w500,color: themeColor1),textAlign: TextAlign.center,),
-                        ],
-                      )),
-                      InkWell(
-                          onTap: (){
-                            FirebaseAuth _auth=FirebaseAuth.instance;
-                            _auth.sendPasswordResetEmail(email: email.text).then((value) {
-                              Fluttertoast.showToast(
-                                  msg: "Login successful",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.black,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0
-                              );
-                            }).catchError((e)=>{
-                            Fluttertoast.showToast(
-                            msg: "Somethings went wrong",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 16.0
-                            )
+  Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+    return SafeArea(
+        child: Scaffold(
+            body: Stack(
+      children: [
+        SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: width * 0.08),
+            height: height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: width * 0.02,
+                ),
+                SvgPicture.asset(
+                  A.assets_login,
+                  width: width * 0.4,
+                  height: width * 0.5,
+                ),
+                Text(
+                  TextCollection.text_login,
+                  style: TextStyle(
+                      fontSize: width * 0.077, fontWeight: FontWeight.bold),
+                ),
+                QuickTextField(
+                  title: TextCollection.text_field_email,
+                  icon: Icons.email,
+                  hintText: TextCollection.text_field_email,
+                  onChange: (value) {},
+                  controller: email,
+                ),
+                QuickTextField(
+                  title: TextCollection.text_field_password,
+                  icon: Icons.password,
+                  hintText: TextCollection.text_field_name,
+                  onChange: (value) {},
+                  controller: password,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        child: Row(
+                      children: [
+                        Checkbox(
+                          activeColor: themeColor1,
+                          value: this.value,
+                          onChanged: (bool value) {
+                            setState(() {
+                              this.value = value;
                             });
                           },
-                          child: Text(TextCollection.text_Forget_Password,style: TextStyle(fontWeight: FontWeight.w500,color: themeColor1),textAlign: TextAlign.center,)),
-                    ],
-                  ),
-                  SizedBox(
-                    height: width * 0.02,
-                  ),
-
-                  MainButton(
-                    text: TextCollection.text_next,
-                    onTap: ()=>Auth.loginUser(email.text,password.text,(value){
-
+                        ),
+                        Text(
+                          TextCollection.text_Remember_Me,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, color: themeColor1),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )),
+                    InkWell(
+                        onTap: () {
+                          FirebaseAuth _auth = FirebaseAuth.instance;
+                          _auth
+                              .sendPasswordResetEmail(email: email.text)
+                              .then((value) {
+                            Fluttertoast.showToast(
+                                msg: "Login successful",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          }).catchError((e) => {
+                                    Fluttertoast.showToast(
+                                        msg: "Somethings went wrong",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.BOTTOM,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.black,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0)
+                                  });
+                        },
+                        child: Text(
+                          TextCollection.text_Forget_Password,
+                          style: TextStyle(
+                              fontWeight: FontWeight.w500, color: themeColor1),
+                          textAlign: TextAlign.center,
+                        )),
+                  ],
+                ),
+                SizedBox(
+                  height: width * 0.02,
+                ),
+                MainButton(
+                  text: TextCollection.text_next,
+                  onTap: () => Auth.loginUser(
+                    email.text,
+                    password.text,
+                    (value) {
                       setState(() {
-                        isLoading=value;
+                        isLoading = value;
                       });
-                    },(value)async{SharedPreferences pref= await SharedPreferences.getInstance();
-                    pref.setString("email", email.text);
-                    pref.setString("password", password.text);
-                    FirebaseAuth _auth= FirebaseAuth.instance;
-                    var ref3=FirebaseDatabase.instance.reference().child('userinfo').child(_auth.currentUser.uid);
-                    Stream<Event> streams = ref3.onValue;
-                    streams.forEach((value) {
-                      print("key" +value.snapshot.key);
-                      print("Value" +value.snapshot.value['details'].toString());
-                      Provider.of<UserDetails>(context,listen: false).saveData(new Map<String,dynamic>.from(value.snapshot.value['details']));
-                    });
-                      Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 1000), child: MainScreen()));
-                    },),),
-                  SizedBox(
-                    height: width * 0.02,
+                    },
+                    (value) async {
+                      SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      pref.setString("email", email.text);
+                      pref.setString("password", password.text);
+                      FirebaseAuth _auth = FirebaseAuth.instance;
+                      var ref3 = FirebaseDatabase.instance
+                          .reference()
+                          .child('userinfo')
+                          .child(_auth.currentUser.uid);
+                      Stream<Event> streams = ref3.onValue;
+                      streams.forEach((value) {
+                        print("key" + value.snapshot.key);
+                        print("Value" +
+                            value.snapshot.value['details'].toString());
+                        Provider.of<UserDetails>(context, listen: false)
+                            .saveData(new Map<String, dynamic>.from(
+                                value.snapshot.value['details']));
+                      });
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              duration: Duration(milliseconds: 1000),
+                              child: MainScreen()));
+                    },
                   ),
-                  SizedBox(
-                    height: width * 0.02,
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: width * 0.02,
+                ),
+                SizedBox(
+                  height: width * 0.02,
+                ),
+              ],
             ),
           ),
-          isLoading?Positioned.fill(child: LoadingIndicator()):Container()
-        ],
-      )
-    ));
+        ),
+        isLoading ? Positioned.fill(child: LoadingIndicator()) : Container()
+      ],
+    )));
   }
 }
