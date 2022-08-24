@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:quick_notes/Screens/notes_filters_screen/notes_search_screen.dart';
 import 'package:quick_notes/Screens/sign_up_screen/sign_up_screen.dart';
 import 'package:quick_notes/constant/constant.dart';
 import 'package:quick_notes/globle_variable.dart';
@@ -171,6 +172,19 @@ class _NotesSearchState extends State<NotesSearch> {
                   contentPadding: EdgeInsets.symmetric(horizontal: width * 0.04)
                 ),
               ),
+            ),
+            SizedBox(
+              height: width * 0.06,
+            ),
+            InkWell(
+              onTap: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>FiltersNotes())),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.04,vertical: width * 0.02),
+                decoration: BoxDecoration(
+                  color: themeColor1,
+                  borderRadius: BorderRadius.circular(5)
+                ),
+                child: Text("Show Future preview of search Notes",style: TextStyle(color: Colors.white),),),
             ),
             SizedBox(
               height: width * 0.06,

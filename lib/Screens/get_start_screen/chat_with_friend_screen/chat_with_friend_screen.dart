@@ -24,7 +24,7 @@ class ChatWithFriend extends StatelessWidget {
                   SvgPicture.asset(A.assets_share, width: width * 0.7 ,height: width *0.5,),
                   Text(TextCollection.text_Chat_with_Friend,style: TextStyle(fontSize:  width * 0.08,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,),
                   Text(TextCollection.text_Chat_with_Friend_subtitle,style: TextStyle(fontWeight: FontWeight.w500,),textAlign: TextAlign.center,),
-                  MainButton(text: TextCollection.text_next,onTap: ()=>    Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 1000), child: WelcomeScreen())),
+                  MainButton(text: TextCollection.text_next,onTap: ()=>    Navigator.push(context, MaterialPageRoute(builder: (context)=>WelcomeScreen())),
                   )])),
       ),
     );

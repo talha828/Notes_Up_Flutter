@@ -99,7 +99,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           pref.setString("password", password.text);
                             Provider.of<UserModel>(context, listen: false).storeDetails(name.text, email.text, password.text);
                             setLoading(false);
-    Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft,duration: Duration(milliseconds: 1000), child: FillYourDetailsScreen()));
+    Navigator.push(context,MaterialPageRoute(builder: (context)=>FillYourDetailsScreen()));
                           },(loading){
                               setState(() {
                                 isLoading = loading;
