@@ -9,7 +9,6 @@ import 'package:quick_notes/image_collection/A.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 
 class NoteSuccessfullyUploaded extends StatefulWidget {
-  const NoteSuccessfullyUploaded({Key key}) : super(key: key);
 
   @override
   State<NoteSuccessfullyUploaded> createState() =>

@@ -5,7 +5,7 @@ import 'package:quick_notes/globle_variable.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 
 class ContactUsScreen extends StatefulWidget {
-  const ContactUsScreen({Key key}) : super(key: key);
+  const ContactUsScreen({Key? key}) : super(key: key);
 
   @override
   State<ContactUsScreen> createState() => _ContactUsScreenState();

@@ -10,12 +10,12 @@ class ChatRoomModel extends ChangeNotifier{
 }
 
 class MessageModel{
-  String sender;
-  String message;
-  String timestamp;
-  MessageModel();
+  String? sender;
+  String? message;
+  String? timestamp;
 
-  MessageModel.fromJson(Map<String,dynamic>json){
+
+  fromJson(Map<String,dynamic>json){
     sender=json["sender"];
     message=json['message'];
     timestamp=json['timestamp'];

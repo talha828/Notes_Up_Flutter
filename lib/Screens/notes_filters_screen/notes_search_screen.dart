@@ -7,7 +7,6 @@ import 'package:quick_notes/globle_variable.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 
 class FiltersNotes extends StatefulWidget {
-  const FiltersNotes({Key key}) : super(key: key);
 
   @override
   State<FiltersNotes> createState() => _FiltersNotesState();

@@ -1,12 +1,12 @@
 class UserChatInfo{
-  String sender;
-  String name;
-  String message;
-  String uid;
-  String timestamp;
-  UserChatInfo();
+  String? sender;
+  String? name;
+  String? message;
+  String? uid;
+  String? timestamp;
 
-  UserChatInfo.fromJson(Map<String,dynamic> json){
+
+  fromJson(Map<String,dynamic> json){
     sender=json["sender"];
     name=json["name"];
     message=json["message"];

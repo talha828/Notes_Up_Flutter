@@ -18,7 +18,7 @@ import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -27,7 +27,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController password = TextEditingController();
   TextEditingController email = TextEditingController();
-  bool value = true;
+  bool? value = true;
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Checkbox(
                           activeColor: themeColor1,
                           value: this.value,
-                          onChanged: (bool value) {
+                          onChanged: (value) {
                             setState(() {
                               this.value = value;
                             });
@@ -150,10 +150,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       var ref3 = FirebaseDatabase.instance
                           .reference()
                           .child('userinfo')
-                          .child(_auth.currentUser.uid);
+                          .child(_auth.currentUser!.uid);
                       Stream<Event> streams = ref3.onValue;
                       streams.forEach((value) {
-                        print("key" + value.snapshot.key);
+                        print("key" + value.snapshot.key!);
                         print("Value" +
                             value.snapshot.value['details'].toString());
                         Provider.of<UserDetails>(context, listen: false)

@@ -16,7 +16,6 @@ import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NotesSearch extends StatefulWidget {
-  const NotesSearch({Key key}) : super(key: key);
 
   @override
   State<NotesSearch> createState() => _NotesSearchState();
@@ -217,7 +216,7 @@ class _NotesSearchState extends State<NotesSearch> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(file[index].name.toUpperCase(),
+                            Text(file[index].name!.toUpperCase(),
                               style: TextStyle(
                                   color: themeColor1,
                                   fontSize: width * 0.05
@@ -226,7 +225,7 @@ class _NotesSearchState extends State<NotesSearch> {
                             SizedBox(
                               height: width * 0.02,
                             ),
-                            Text(file[index].author.toUpperCase(),
+                            Text(file[index].author!.toUpperCase(),
                               style: TextStyle(
                                   color: themeColor1,
                                   fontSize: width * 0.040
@@ -247,7 +246,7 @@ class _NotesSearchState extends State<NotesSearch> {
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
-                                    Text(file[index].grade.toUpperCase(),
+                                    Text(file[index].grade!.toUpperCase(),
                                       style: TextStyle(
                                           color: themeColor1,
                                           fontSize: width * 0.040
@@ -267,7 +266,7 @@ class _NotesSearchState extends State<NotesSearch> {
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
-                                    Text(file[index].edition.toUpperCase(),
+                                    Text(file[index].edition!.toUpperCase(),
                                       style: TextStyle(
                                           color: themeColor1,
                                           fontSize: width * 0.040
@@ -289,7 +288,7 @@ class _NotesSearchState extends State<NotesSearch> {
                                       backgroundColor: themeColor1,
                                       radius: width * 0.033,
                                       child: Center(
-                                        child: Text(file[index].name.substring(0,1).toUpperCase(),style: TextStyle(
+                                        child: Text(file[index].name!.substring(0,1).toUpperCase(),style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 11
                                         ),),
@@ -298,7 +297,7 @@ class _NotesSearchState extends State<NotesSearch> {
                                     SizedBox(
                                       width: width * 0.02,
                                     ),
-                                    Text(file[index].name.toUpperCase(),
+                                    Text(file[index].name!.toUpperCase(),
                                       style: TextStyle(
                                           color: themeColor1,
                                           fontSize: width * 0.040

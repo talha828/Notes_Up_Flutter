@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 class CustomScaffold extends StatelessWidget {
   CustomScaffold({this.body,this.appBar}); // and maybe other Scaffold properties
 
-   Widget body;
-   AppBar appBar;
+   Widget? body;
+   AppBar? appBar;
 
   @override
   Widget build(BuildContext context) {

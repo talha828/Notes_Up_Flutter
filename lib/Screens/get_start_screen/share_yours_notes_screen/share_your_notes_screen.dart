@@ -6,7 +6,7 @@ import 'package:quick_notes/image_collection/A.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 
 class ShareYourNotes extends StatelessWidget {
-  const ShareYourNotes({Key key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {

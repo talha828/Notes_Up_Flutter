@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 
 class UserDetails extends ChangeNotifier{
-  String name;
-  String email;
-  String password;
-  String country;
-  String city;
-  String institute;
-  String grade;
-  String uid;
+  String? name;
+  String? email;
+  String? password;
+  String? country;
+  String? city;
+  String? institute;
+  String? grade;
+  String? uid;
 
   void saveData(Map<String,dynamic>json){
     this.name=json['name'];

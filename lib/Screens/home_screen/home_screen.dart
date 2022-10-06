@@ -16,7 +16,7 @@ import 'package:quick_notes/model/user_details.dart';
 import '../notes_search.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -95,7 +95,7 @@ class HomeScreenCard extends StatelessWidget {
   String image;
   String title;
   var onTap;
-  HomeScreenCard({this.image, this.onTap, this.title});
+  HomeScreenCard({required this.image, this.onTap,required this.title});
   @override
   Widget build(BuildContext context) {
     return InkWell(

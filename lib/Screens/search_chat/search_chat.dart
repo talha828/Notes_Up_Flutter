@@ -17,8 +17,6 @@ import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ChatSearch extends StatefulWidget {
-  const ChatSearch({Key key}) : super(key: key);
-
   @override
   State<ChatSearch> createState() => _ChatSearchState();
 }
@@ -39,7 +37,7 @@ class _ChatSearchState extends State<ChatSearch> {
       value.snapshot.value.forEach((key,value){
         print(key);
         print(value.toString());
-        Provider.of<SearchChatModel>(context,listen: false).storeUsers(UsersDetails.fromJson(new Map<String,dynamic>.from(value["details"])));
+        Provider.of<SearchChatModel>(context,listen: false).storeUsers(UsersDetails().fromJson(new Map<String,dynamic>.from(value["details"])));
       });
     });
   }
@@ -94,7 +92,7 @@ class _ChatSearchState extends State<ChatSearch> {
                 onChanged: (value){
                   file.clear();
                   for(int i=0;i<data.length;i++){
-                    if(data[i].name.contains(value)){
+                    if(data[i].name!.contains(value)){
                       file.add(data[i]);
                     }
                   }
@@ -139,7 +137,7 @@ class _ChatSearchState extends State<ChatSearch> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(file[index].name.toUpperCase(),
+                            Text(file[index].name!.toUpperCase(),
                               style: TextStyle(
                                   color: themeColor1,
                                   fontSize: width * 0.05
@@ -148,7 +146,7 @@ class _ChatSearchState extends State<ChatSearch> {
                             SizedBox(
                               height: width * 0.02,
                             ),
-                            Text(file[index].email.toUpperCase(),
+                            Text(file[index].email!.toUpperCase(),
                               style: TextStyle(
                                   color: themeColor1,
                                   fontSize: width * 0.040
@@ -169,7 +167,7 @@ class _ChatSearchState extends State<ChatSearch> {
                                           fontWeight: FontWeight.bold
                                       ),
                                     ),
-                                    Text(file[index].grade.toUpperCase(),
+                                    Text(file[index].grade!.toUpperCase(),
                                       style: TextStyle(
                                           color: themeColor1,
                                           fontSize: width * 0.040
@@ -190,7 +188,7 @@ class _ChatSearchState extends State<ChatSearch> {
                                       ),
                                     ),
                                     FittedBox(
-                                      child: Text(file[index].institute.toUpperCase(),
+                                      child: Text(file[index].institute!.toUpperCase(),
                                         style: TextStyle(
                                             color: themeColor1,
                                             fontSize: width * 0.040
@@ -213,7 +211,7 @@ class _ChatSearchState extends State<ChatSearch> {
                                       backgroundColor: themeColor1,
                                       radius: width * 0.033,
                                       child: Center(
-                                        child: Text(file[index].name.substring(0,1).toUpperCase(),style: TextStyle(
+                                        child: Text(file[index].name!.substring(0,1).toUpperCase(),style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 11
                                         ),),
@@ -222,7 +220,7 @@ class _ChatSearchState extends State<ChatSearch> {
                                     SizedBox(
                                       width: width * 0.02,
                                     ),
-                                    Text(file[index].name.toUpperCase(),
+                                    Text(file[index].name!.toUpperCase(),
                                       style: TextStyle(
                                           color: themeColor1,
                                           fontSize: width * 0.040

@@ -14,7 +14,6 @@ import '../../image_collection/A.dart';
 import 'package:page_transition/page_transition.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key key}) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -23,15 +22,15 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
    getLogin()async{
      SharedPreferences pref= await SharedPreferences.getInstance();
-    String email= pref.getString("email");
-    String password= pref.getString("password");
+    String? email= pref.getString("email");
+    String? password= pref.getString("password");
     if(email != null && password !=null){
       FirebaseAuth _auth= FirebaseAuth.instance;
       _auth.signInWithEmailAndPassword(email: email, password: password).then((value) async{
-        var ref3=FirebaseDatabase.instance.reference().child('userinfo').child(_auth.currentUser.uid);
+        var ref3=FirebaseDatabase.instance.reference().child('userinfo').child(_auth.currentUser!.uid);
         Stream<Event> streams = ref3.onValue;
          streams.forEach((value) {
-          print("key" +value.snapshot.key);
+          print("key" +value.snapshot.key!);
           print("Value" +value.snapshot.value['details'].toString());
           Provider.of<UserDetails>(context,listen: false).saveData(new Map<String,dynamic>.from(value.snapshot.value['details']));
         });

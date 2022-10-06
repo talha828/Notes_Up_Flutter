@@ -18,7 +18,6 @@ import 'package:quick_notes/image_collection/A.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 
 class UploadFromGallery extends StatefulWidget {
-  const UploadFromGallery({Key key}) : super(key: key);
 
   @override
   State<UploadFromGallery> createState() => _UploadFromGalleryState();
@@ -32,7 +31,7 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
       allowedExtensions: ['pdf'],
     );
     if(file != null){
-      pdf=File(file.files.single.path);
+      pdf=File(file.files.single.path!);
       double size=file.files.single.size/(1024 *1024);
       this.size=size.toStringAsFixed(2);
       name=file.files.single.name;
@@ -53,7 +52,7 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
             setLoading(true);
             FirebaseStorage _storage = FirebaseStorage.instance;
             var reference = _storage.ref().child("Pdf/${name}");
-            var uploadTask =await reference.putFile(pdf).snapshot.ref.getDownloadURL().catchError((e){
+            var uploadTask =await reference.putFile(pdf!).snapshot.ref.getDownloadURL().catchError((e){
               Fluttertoast.showToast(
                   msg: "Somethings went wrong,try, again",
                   toastLength: Toast.LENGTH_SHORT,
@@ -69,7 +68,7 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
             FirebaseAuth _auth = FirebaseAuth.instance;
             FirebaseDatabase.instance
                 .reference()
-                .child("notes_search_logs").child(name+author+grade+edition+_auth.currentUser.uid)
+                .child("notes_search_logs").child(name!+author+grade+edition+_auth.currentUser!.uid)
                 .set({
               "details":{
                 "file_name":name,
@@ -77,13 +76,13 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
                 "grade":grade,
                 "edition":edition,
                 "url":uploadTask.toString(),
-                "uid":_auth.currentUser.uid,
-                "search_key":(name+author+grade+edition+_auth.currentUser.uid).trim(),
+                "uid":_auth.currentUser!.uid,
+                "search_key":(name!+author+grade+edition+_auth.currentUser!.uid).trim(),
               }
             });
             FirebaseDatabase.instance
                 .reference()
-                .child("notes_details").child(_auth.currentUser.uid).child(name.replaceAll(".pdf", "").trim())
+                .child("notes_details").child(_auth.currentUser!.uid).child(name!.replaceAll(".pdf", "").trim())
                 .set({
               "details":{
                 "file_name":name,
@@ -91,8 +90,8 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
                 "grade":grade,
                 "edition":edition,
                 "url":uploadTask.toString(),
-                "uid":_auth.currentUser.uid,
-                "search_key":(name+author+grade+edition+_auth.currentUser.uid).trim(),
+                "uid":_auth.currentUser!.uid,
+                "search_key":(name!+author+grade+edition+_auth.currentUser!.uid).trim(),
               }
             }).then(then).catchError((e){
               setLoading(false);
@@ -153,9 +152,9 @@ class _UploadFromGalleryState extends State<UploadFromGallery> {
   TextEditingController author=TextEditingController();
   TextEditingController grade=TextEditingController();
   TextEditingController edition=TextEditingController();
-  File pdf;
-  String size;
-  String name;
+  File? pdf;
+  String? size;
+  String? name;
   @override
   Widget build(BuildContext context) {
     width=MediaQuery.of(context).size.width;

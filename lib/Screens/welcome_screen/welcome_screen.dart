@@ -8,7 +8,6 @@ import '../sign_up_screen/sign_up_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({Key key}) : super(key: key);
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();

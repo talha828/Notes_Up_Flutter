@@ -15,17 +15,16 @@ class SearchChatModel extends ChangeNotifier{
 }
 
 class UsersDetails{
-  String name;
-  String email;
-  String password;
-  String country;
-  String city;
-  String institute;
-  String grade;
-  String uid;
-  String timestamp;
-  UsersDetails();
-    UsersDetails.fromJson(Map<String,dynamic>json){
+  String? name;
+  String? email;
+  String? password;
+  String? country;
+  String? city;
+  String? institute;
+  String? grade;
+  String? uid;
+  String? timestamp;
+    fromJson(Map<String,dynamic>json){
     this.name=json['name'];
     this.email=json['email'];
     this.password=json['password'];

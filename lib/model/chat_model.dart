@@ -7,7 +7,7 @@ class ChatList extends ChangeNotifier{
   void addList(List<MessageModel>value){
     list.clear();
     value.sort((a, b) {
-      return a.timestamp.compareTo(b.timestamp);
+      return a.timestamp!.compareTo(b.timestamp!);
     });
     list.addAll(value);
     notifyListeners();

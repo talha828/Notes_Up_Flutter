@@ -20,7 +20,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../image_collection/A.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key key}) : super(key: key);
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -180,7 +179,6 @@ class QuickTextField extends StatelessWidget {
 }
 
 class LoadingIndicator extends StatelessWidget {
-  const LoadingIndicator({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

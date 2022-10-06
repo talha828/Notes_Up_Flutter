@@ -20,7 +20,6 @@ import 'package:quick_notes/model/user_details.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({Key key}) : super(key: key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -112,17 +111,17 @@ class _MainScreenState extends State<MainScreen> {
               children: <Widget>[
                 UserAccountsDrawerHeader(
                   accountName: Text(
-                    myData.name.toUpperCase(),
+                    myData.name!.toUpperCase(),
                     style: TextStyle(color: Colors.white),
                   ),
                   accountEmail: Text(
-                    myData.email,
+                    myData.email!,
                     style: TextStyle(color: Colors.white),
                   ),
                   currentAccountPicture: CircleAvatar(
                     backgroundColor: Colors.white,
                     child: Text(
-                      myData.name.substring(0, 1).toUpperCase(),
+                      myData.name!.substring(0, 1).toUpperCase(),
                       style: TextStyle(fontSize: 40.0, color: themeColor1),
                     ),
                   ),
@@ -166,8 +165,8 @@ class _MainScreenState extends State<MainScreen> {
                   onTap: () async {
                     SharedPreferences pref =
                         await SharedPreferences.getInstance();
-                    pref.setString("email", null);
-                    pref.setString("password", null);
+                    pref.setString("email", "null");
+                    pref.setString("password", "null");
                     Navigator.push(
                         context,
                         MaterialPageRoute(

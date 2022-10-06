@@ -13,8 +13,8 @@ import 'package:quick_notes/model/search_chat_model.dart';
 import 'package:quick_notes/model/user_details.dart';
 
 class ChatRoom extends StatefulWidget {
-  UsersDetails friend;
-  bool check;
+  UsersDetails? friend;
+  bool? check;
   ChatRoom({this.friend,this.check});
   @override
   State<ChatRoom> createState() => _ChatRoomState();
@@ -32,17 +32,17 @@ class _ChatRoomState extends State<ChatRoom> {
      DatabaseReference ref3 = FirebaseDatabase.instance
          .reference()
          .child('chatinfo')
-         .child(_auth.currentUser.uid);
+         .child(_auth.currentUser!.uid);
      Stream<Event> streams = ref3.onValue;
      streams.forEach((value) {
        value.snapshot.value.forEach((key, value) {
          list.clear();
-         if (key.toString() == widget.friend.uid.toString()) {
+         if (key.toString() == widget.friend!.uid.toString()) {
            value.forEach((key, value) {
              list.add(
-                 MessageModel.fromJson(new Map<String, dynamic>.from(value)));
+                 MessageModel().fromJson(new Map<String, dynamic>.from(value)));
              print(DateTime.fromMillisecondsSinceEpoch(
-                 double.parse(list[0].timestamp).toInt() * 1000)
+                 double.parse(list[0].timestamp!).toInt() * 1000)
                  .toString()
                  .substring(11, 17));
              Provider.of<ChatList>(context,listen: false).addList(list);
@@ -60,7 +60,7 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   void initState() {
     super.initState();
-    getMessageData(widget.check);
+    getMessageData(widget.check!);
   }
   @override
   void dispose() {
@@ -77,7 +77,7 @@ class _ChatRoomState extends State<ChatRoom> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text(
-            widget.friend.name,
+            widget.friend!.name.toString(),
             style: TextStyle(color: themeColor1),
           ),
           leading: InkWell(
@@ -104,11 +104,11 @@ class _ChatRoomState extends State<ChatRoom> {
                             child: Container(
                               child: Row(
                                 mainAxisAlignment:
-                                    _auth.currentUser.uid != list[index].sender
+                                    _auth.currentUser!.uid != list[index].sender
                                         ? MainAxisAlignment.start
                                         : MainAxisAlignment.end,
                                 children: [
-                                  _auth.currentUser.uid != list[index].sender
+                                  _auth.currentUser!.uid != list[index].sender
                                       ? Container(
                                           decoration: BoxDecoration(
                                               borderRadius:
@@ -117,17 +117,17 @@ class _ChatRoomState extends State<ChatRoom> {
                                                   color: themeColor1)),
                                           child: CircleAvatar(
                                             backgroundColor:
-                                                _auth.currentUser.uid !=
+                                                _auth.currentUser!.uid !=
                                                         list[index].sender
                                                     ? themeColor1
                                                     : Colors.transparent,
                                             radius: 15,
                                             child: Text(
-                                              widget.friend.name
+                                              widget.friend!.name.toString()
                                                   .substring(0, 1),
                                               style: TextStyle(
                                                   color:
-                                                      _auth.currentUser.uid !=
+                                                      _auth.currentUser!.uid !=
                                                               list[index].sender
                                                           ? Colors.white
                                                           : themeColor1),
@@ -135,7 +135,7 @@ class _ChatRoomState extends State<ChatRoom> {
                                           ),
                                         )
                                       : Container(),
-                                  _auth.currentUser.uid != list[index].sender
+                                  _auth.currentUser!.uid != list[index].sender
                                       ? SizedBox(
                                           width: width * 0.02,
                                         )
@@ -145,7 +145,7 @@ class _ChatRoomState extends State<ChatRoom> {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(15),
-                                        color: _auth.currentUser.uid !=
+                                        color: _auth.currentUser!.uid !=
                                                 list[index].sender
                                             ? Colors.white
                                             : themeColor1,
@@ -163,9 +163,9 @@ class _ChatRoomState extends State<ChatRoom> {
                                           Container(
                                               child: Flexible(
                                                   child: Text(
-                                            list[index].message,
+                                            list[index].message.toString(),
                                             style: TextStyle(
-                                                color: _auth.currentUser.uid !=
+                                                color: _auth.currentUser!.uid !=
                                                         list[index].sender
                                                     ? themeColor1
                                                     : Colors.white),
@@ -173,12 +173,12 @@ class _ChatRoomState extends State<ChatRoom> {
                                           Text(
                                             DateTime.fromMillisecondsSinceEpoch(
                                                     double.parse(list[index]
-                                                            .timestamp)
+                                                            .timestamp.toString())
                                                         .toInt())
                                                 .toString()
                                                 .substring(11, 16),
                                             style: TextStyle(
-                                                color: _auth.currentUser.uid !=
+                                                color: _auth.currentUser!.uid !=
                                                         list[index].sender
                                                     ? themeColor1
                                                     : Colors.white),
@@ -187,12 +187,12 @@ class _ChatRoomState extends State<ChatRoom> {
                                       ),
                                     ),
                                   ),
-                                  _auth.currentUser.uid == list[index].sender
+                                  _auth.currentUser!.uid == list[index].sender
                                       ? SizedBox(
                                           width: width * 0.02,
                                         )
                                       : Container(),
-                                  _auth.currentUser.uid == list[index].sender
+                                  _auth.currentUser!.uid == list[index].sender
                                       ? Container(
                                           decoration: BoxDecoration(
                                               borderRadius:
@@ -203,7 +203,7 @@ class _ChatRoomState extends State<ChatRoom> {
                                             backgroundColor: Colors.transparent,
                                             radius: 15,
                                             child: Text(
-                                              data.name.substring(0, 1),
+                                              data.name.toString().substring(0, 1),
                                               style:
                                                   TextStyle(color: themeColor1),
                                             ),
@@ -263,52 +263,52 @@ class _ChatRoomState extends State<ChatRoom> {
                         await  FirebaseDatabase.instance
                             .reference()
                             .child("chatinfo")
-                            .child(_auth.currentUser.uid)
-                            .child(widget.friend.uid)
+                            .child(_auth.currentUser!.uid)
+                            .child(widget.friend!.uid.toString())
                             .child(timestamp)
                             .set({
                           "timestamp":
                           timestamp,
                           "message": controller.text,
-                          "sender": _auth.currentUser.uid,
+                          "sender": _auth.currentUser!.uid,
                         });
                         await  FirebaseDatabase.instance
                             .reference()
                             .child("chatinfo")
-                            .child(widget.friend.uid)
-                            .child(_auth.currentUser.uid)
+                            .child(widget.friend!.uid.toString())
+                            .child(_auth.currentUser!.uid)
                             .child(timestamp)
                             .set({
                           "timestamp":
                           timestamp,
                           "message": controller.text,
-                          "sender": _auth.currentUser.uid,
+                          "sender": _auth.currentUser!.uid,
                         });
                         var rr1=await FirebaseDatabase.instance
                             .reference()
                             .child("chatuserinfo")
-                            .child(widget.friend.uid)
-                            .child(_auth.currentUser.uid)
+                            .child(widget.friend!.uid.toString())
+                            .child(_auth.currentUser!.uid.toString())
                             .set({
                           "name": data.name,
                           "timestamp":
                           timestamp.toString(),
                           "message": controller.text,
-                          "receiver":widget.friend.uid,
-                          "sender": _auth.currentUser.uid,
+                          "receiver":widget.friend!.uid,
+                          "sender": _auth.currentUser!.uid,
                         }).then((value) async{
                           await FirebaseDatabase.instance
                               .reference()
                               .child("chatuserinfo")
-                              .child(_auth.currentUser.uid)
-                              .child(widget.friend.uid)
+                              .child(_auth.currentUser!.uid)
+                              .child(widget.friend!.uid.toString())
                               .set({
-                            "name": widget.friend.name,
+                            "name": widget.friend!.name.toString(),
                             "timestamp":
                             timestamp.toString() ,
                             "message": controller.text,
-                            "sender": _auth.currentUser.uid,
-                            "receiver":widget.friend.uid,
+                            "sender": _auth.currentUser!.uid,
+                            "receiver":widget.friend!.uid,
                           }).then((value) {
                             getMessageData(true);
                             controller.clear();});

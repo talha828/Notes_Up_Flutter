@@ -16,7 +16,7 @@ import '../../sign_up_screen/sign_up_screen.dart';
 import '../../welcome_screen/welcome_screen.dart';
 
 class ShareYourCollection extends StatefulWidget {
-  const ShareYourCollection({Key key}) : super(key: key);
+
 
   @override
   State<ShareYourCollection> createState() => _ShareYourCollectionState();

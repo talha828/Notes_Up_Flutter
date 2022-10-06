@@ -14,7 +14,7 @@ import 'package:quick_notes/model/user_details.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 
 class ProfileScreen extends StatefulWidget {
-  UserDetails data;
+  UserDetails? data;
   ProfileScreen({this.data});
 
   @override
@@ -38,13 +38,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
   @override
   void initState() {
-    name=TextEditingController(text: widget.data.name);
-    country=TextEditingController(text: widget.data.country);
-    city=TextEditingController(text: widget.data.city);
-    institute=TextEditingController(text: widget.data.institute);
-    grade=TextEditingController(text: widget.data.grade);
-    email=TextEditingController(text: widget.data.email);
-    password=TextEditingController(text: widget.data.password);
+    name=TextEditingController(text: widget.data!.name);
+    country=TextEditingController(text: widget.data!.country);
+    city=TextEditingController(text: widget.data!.city);
+    institute=TextEditingController(text: widget.data!.institute);
+    grade=TextEditingController(text: widget.data!.grade);
+    email=TextEditingController(text: widget.data!.email);
+    password=TextEditingController(text: widget.data!.password);
     super.initState();
   }
   @override
@@ -88,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           radius: width * 0.07,
                           backgroundColor: themeColor1,
                           child: Text(
-                            widget.data.name.substring(0,1).toUpperCase(),
+                            widget.data!.name.toString().substring(0,1).toUpperCase(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: width * 0.07
@@ -163,7 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             FirebaseAuth _auth = FirebaseAuth.instance;
                             FirebaseDatabase.instance
                                 .reference()
-                                .child("userinfo").child(_auth.currentUser.uid)
+                                .child("userinfo").child(_auth.currentUser!.uid)
                                 .set({
                               "details":{
                                 "email":email.text,
@@ -173,7 +173,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 "city":city.text,
                                 "institute":institute.text,
                                 "grade":grade.text,
-                                "uid":_auth.currentUser.uid,
+                                "uid":_auth.currentUser!.uid,
                               }
                             })
                             .then((value)async{

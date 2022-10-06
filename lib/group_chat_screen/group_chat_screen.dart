@@ -9,7 +9,7 @@ import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 import '../globle_variable.dart';
 
 class GroupChatScreen extends StatefulWidget {
-  const GroupChatScreen({Key key}) : super(key: key);
+  const GroupChatScreen({Key? key}) : super(key: key);
 
   @override
   State<GroupChatScreen> createState() => _GroupChatScreenState();

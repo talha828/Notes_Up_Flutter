@@ -16,7 +16,7 @@ import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CollectionScreen extends StatefulWidget {
-  const CollectionScreen({Key key}) : super(key: key);
+  const CollectionScreen({Key? key}) : super(key: key);
 
   @override
   State<CollectionScreen> createState() => _CollectionScreenState();
@@ -28,10 +28,10 @@ class _CollectionScreenState extends State<CollectionScreen> {
   getData(){
     FirebaseAuth _auth=FirebaseAuth.instance;
     DatabaseReference ref3 =
-    FirebaseDatabase.instance.reference().child('notes_details').child(_auth.currentUser.uid);
+    FirebaseDatabase.instance.reference().child('notes_details').child(_auth.currentUser!.uid);
     Stream<Event> streams = ref3.onValue;
     streams.forEach((value) {
-      print("key"+value.snapshot.key);
+      print("key"+value.snapshot.key!);
       print("value"+value.snapshot.value.toString());
       Provider.of<StoreFile>(context,listen: false).getData(new Map<String, dynamic>.from(value.snapshot.value));
       setState(() {});
@@ -99,7 +99,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(data.list[index].name.toUpperCase(),
+                Text(data.list[index].name!.toUpperCase(),
                   style: TextStyle(
                     color: themeColor1,
                     fontSize: width * 0.05
@@ -108,7 +108,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                 SizedBox(
                   height: width * 0.02,
                 ),
-                Text(data.list[index].author.toUpperCase(),
+                Text(data.list[index].author!.toUpperCase(),
                   style: TextStyle(
                       color: themeColor1,
                       fontSize: width * 0.040
@@ -129,7 +129,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                               fontWeight: FontWeight.bold
                           ),
                         ),
-                        Text(data.list[index].grade.toUpperCase(),
+                        Text(data.list[index].grade!.toUpperCase(),
                           style: TextStyle(
                               color: themeColor1,
                               fontSize: width * 0.040
@@ -149,7 +149,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                               fontWeight: FontWeight.bold
                           ),
                         ),
-                        Text(data.list[index].edition.toUpperCase(),
+                        Text(data.list[index].edition!.toUpperCase(),
                           style: TextStyle(
                               color: themeColor1,
                               fontSize: width * 0.040
@@ -171,7 +171,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                         backgroundColor: themeColor1,
                         radius: width * 0.033,
                         child: Center(
-                          child: Text(myData.name.substring(0,1).toUpperCase(),style: TextStyle(
+                          child: Text(myData.name!.substring(0,1).toUpperCase(),style: TextStyle(
                             color: Colors.white,
                             fontSize: 11
                           ),),
@@ -180,7 +180,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
                       SizedBox(
                         width: width * 0.02,
                       ),
-                      Text(myData.name.toUpperCase(),
+                      Text(myData.name!.toUpperCase(),
                         style: TextStyle(
                             color: themeColor1,
                             fontSize: width * 0.040

@@ -7,21 +7,20 @@ class StoreFile extends ChangeNotifier{
     list.clear();
     for (var i in json.values){
       print(i['details']["file_name"]);
-      list.add(FileDetails.fromJson(i));
+      list.add(FileDetails().fromJson(i));
     }
     notifyListeners();
   }
 }
 class FileDetails extends ChangeNotifier{
-  String name;
-  String url;
-  String author;
-  String edition;
-  String grade;
-  String searchKey;
-  FileDetails();
+  String? name;
+  String? url;
+  String? author;
+  String? edition;
+  String? grade;
+  String? searchKey;
 
-  FileDetails.fromJson(var json){
+  fromJson(var json){
     name=json['details']['file_name'];
     url=json['details']["url"];
     edition=json['details']['edition'];

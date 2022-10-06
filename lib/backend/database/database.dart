@@ -14,7 +14,7 @@ class Database {
             FirebaseAuth _auth = FirebaseAuth.instance;
             FirebaseDatabase.instance
                 .reference()
-                .child("userinfo").child(_auth.currentUser.uid)
+                .child("userinfo").child(_auth.currentUser!.uid)
                 .set({
               "details":{
                 "name":name,
@@ -24,7 +24,7 @@ class Database {
                 "city":city,
                 "institute":institute,
                 "grade":grade,
-                "uid":_auth.currentUser.uid,
+                "uid":_auth.currentUser!.uid,
               }
             }).then(then).catchError((e){
               setLoading(false);

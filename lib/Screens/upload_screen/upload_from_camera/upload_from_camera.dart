@@ -21,7 +21,7 @@ import 'package:quick_notes/image_collection/A.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 
 class UploadFromCamera extends StatefulWidget {
-  const UploadFromCamera({Key key}) : super(key: key);
+
 
   @override
   State<UploadFromCamera> createState() => _UploadFromCameraState();
@@ -62,7 +62,7 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
               FirebaseAuth _auth = FirebaseAuth.instance;
               FirebaseDatabase.instance
                   .reference()
-                  .child("notes_search_logs").child(filename+author+grade+edition+_auth.currentUser.uid)
+                  .child("notes_search_logs").child(filename+author+grade+edition+_auth.currentUser!.uid)
                   .set({
                 "details":{
                   "file_name":filename,
@@ -70,13 +70,13 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
                   "grade":grade,
                   "edition":edition,
                   "url":value.toString(),
-                  "uid":_auth.currentUser.uid,
-                  "search_key":(filename+author+grade+edition+_auth.currentUser.uid).trim(),
+                  "uid":_auth.currentUser!.uid,
+                  "search_key":(filename+author+grade+edition+_auth.currentUser!.uid).trim(),
                 }
               });
               FirebaseDatabase.instance
                   .reference()
-                  .child("notes_details").child(_auth.currentUser.uid).child(filename.replaceAll(".pdf", "").trim())
+                  .child("notes_details").child(_auth.currentUser!.uid).child(filename.replaceAll(".pdf", "").trim())
                   .set({
                 "details":{
                   "file_name":filename,
@@ -84,8 +84,8 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
                   "grade":grade,
                   "edition":edition,
                   "url":value.toString(),
-                  "uid":_auth.currentUser.uid,
-                  "search_key":(filename+author+grade+edition+_auth.currentUser.uid).trim(),
+                  "uid":_auth.currentUser!.uid,
+                  "search_key":(filename+author+grade+edition+_auth.currentUser!.uid).trim(),
                 }
               }).then(then).catchError((e){
                 setLoading(false);
@@ -193,9 +193,9 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
                         onTap: () async {
                           var camera = await Permission.camera.request();
                           var gallery = await Permission.storage.request();
-                          File images = await ImagePicker.pickImage(
+                          XFile? images = await ImagePicker().pickImage(
                               source: ImageSource.camera);
-                          image.add(images);
+                          image.add(File(images!.path));
                           setState(() {});
                         },
                         child: image.length > 0
@@ -214,9 +214,9 @@ class _UploadFromCameraState extends State<UploadFromCamera> {
                                         onTap: ()async{
                                           var camera = await Permission.camera.request();
                                           var gallery = await Permission.storage.request();
-                                          File images = await ImagePicker.pickImage(
+                                          XFile? images = await ImagePicker().pickImage(
                                               source: ImageSource.camera);
-                                          image.add(images);
+                                          image.add(File(images!.path));
                                           setState(() {});
                                         },
                                         child: ClipRRect(

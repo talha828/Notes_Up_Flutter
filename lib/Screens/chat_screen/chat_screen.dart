@@ -17,7 +17,7 @@ import 'package:quick_notes/model/user_details.dart';
 import 'package:quick_notes/text_string_collection/text_string_collection.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({Key key}) : super(key: key);
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -31,7 +31,7 @@ class _ChatScreenState extends State<ChatScreen> {
    DatabaseReference ref3 = FirebaseDatabase.instance
        .reference()
        .child('chatuserinfo')
-       .child(_auth.currentUser.uid);
+       .child(_auth.currentUser!.uid);
    Stream<Event> streams = ref3.onValue;
    streams.forEach((value) {
      list.clear();
@@ -40,10 +40,10 @@ class _ChatScreenState extends State<ChatScreen> {
      value.snapshot.value.forEach((key,value){
 
        print(value.toString());
-       list.add(UsersDetails.fromJson(Map<String,dynamic>.from(value)));
-       chat.add(UserChatInfo.fromJson(Map<String,dynamic>.from(value)));
-       list.sort((a,b){return a.timestamp.compareTo(b.timestamp);});
-       chat.sort((a,b){return a.timestamp.compareTo(b.timestamp);});
+       list.add(UsersDetails().fromJson(Map<String,dynamic>.from(value)));
+       chat.add(UserChatInfo().fromJson(Map<String,dynamic>.from(value)));
+       list.sort((a,b){return a.timestamp!.compareTo(b.timestamp!);});
+       chat.sort((a,b){return a.timestamp!.compareTo(b.timestamp!);});
 
        setState(() {});
      });
@@ -166,18 +166,18 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         child: CircleAvatar(
                           backgroundColor: Colors.transparent,
-                          child: Text(chat[index].name.substring(0,1).toUpperCase(),style: TextStyle(
+                          child: Text(chat[index].name.toString().substring(0,1).toUpperCase(),style: TextStyle(
                             fontSize: width * 0.06,
                             fontWeight: FontWeight.bold,
                             color: themeColor1
                           ),),
                         ),
                       ),
-                      title: Text(chat[index].name.toUpperCase()),
-                      subtitle: Text(chat[index].message.length>20?chat[index].message.substring(0,20)+"...":chat[index].message),
+                      title: Text(chat[index].name.toString().toUpperCase()),
+                      subtitle: Text(chat[index].message.toString(),maxLines: 1,),
                       trailing: Text( DateTime.fromMillisecondsSinceEpoch(
                           double.parse(chat[index]
-                              .timestamp)
+                              .timestamp.toString())
                               .toInt())
                           .toString()
                           .substring(11, 16),style: TextStyle(
