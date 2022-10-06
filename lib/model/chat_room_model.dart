@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 
-class ChatRoomModel extends ChangeNotifier{
-  List<MessageModel>message=[];
+class ChatRoomModel extends ChangeNotifier {
+  List<MessageModel> message = [];
 
-  void collectMessage(List<MessageModel>value){
+  void collectMessage(List<MessageModel> value) {
     message.clear();
     message.addAll(value);
   }
 }
 
-class MessageModel{
+class MessageModel {
   String? sender;
   String? message;
   String? timestamp;
 
-
-  fromJson(Map<String,dynamic>json){
-    sender=json["sender"];
-    message=json['message'];
-    timestamp=json['timestamp'];
+  fromJson(Map<String, dynamic> json) {
+    sender = json["sender"];
+    message = json['message'];
+    timestamp = json['timestamp'];
   }
 }
